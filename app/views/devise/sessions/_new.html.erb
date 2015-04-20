@@ -1,0 +1,27 @@
+<% if alert %>
+  <div id="display-devise-errors-signin" data-alert class="alert-box alert radius">
+    <ul><bdi><%= alert %></bdi></ul>    
+  </div>    
+<% end %>  
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="row">
+    <label>البريد الإلكتروني</label>
+    <%= f.email_field :email, autofocus: true,  placeholder: 'email@mail.com' %>
+  </div>
+
+  <div class="row">
+    <label>كلمة المرور</label>
+    <%= f.password_field :password, autocomplete: "off",  placeholder: '********' %>
+  </div>
+
+  <% if devise_mapping.rememberable? -%>
+    <div class="field">
+      <%= f.check_box :remember_me %>
+      <label>تذكر حسابي</label>
+    </div>
+  <% end -%>
+
+  <div class="row">
+    <%= f.submit "دخول", :class => 'tiny button radius' %>
+  </div>
+<% end %>

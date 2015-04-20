@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= content_for?(:title) ? yield(:title) : "تَشكِل | مَرحباً :)" %></title>
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "vendor/modernizr" %>    
+    <%#= javascript_include_tag "application", 'data-turbolinks-track' => true %>    
+    <%= csrf_meta_tags %> 
+  </head>
+
+  <body>
+    <div class="navigation bar">
+      <%= render "layouts/nav_bar" %>
+    </div> <!--/navigation bar-->
+
+    <div class="row" id="firstRow">
+      <div class="small-4 columns" align="center">
+        <%= render "layouts/side_bar"%>
+      </div> <!--small-4 columns-->
+      <div class="small-8 columns text-center">
+        <% if notice %>
+          <div data-alert class="alert-box info radius">
+            <%= notice %>
+            <a href="#" class="close">&times;</a>
+          </div>
+        <% end %>
+        <%# remember that yield will render the current controller/action templater%>
+        <% if player_signed_in? %>
+          <div class="row" id="carouselRow" style="border: 2px solid #1ABEDC; border-radius:2px; height: 525px;">
+            <%=yield%>
+          </div>        
+        <% else %>
+          <%= render "site/welcome_content" %>
+        <% end %>
+      </div> <!--small-8 columns-->
+    </div><!--row-->
+  </body>
+   <%= javascript_include_tag "application" %>   
+   <%= include_gon %>
+   <script src="//js.pusher.com/2.2/pusher.min.js" type="text/javascript"></script>
+</html>

@@ -1,0 +1,68 @@
+<div id="waiting">
+	<div class="spinnercontainer">
+		<div class="dots" id="spinner">Loading&#8230;</div>
+	</div>
+	<h3> نَنتظِر إنضِمام شريكٌكَ في اللعبه! </h3>
+</div>
+
+
+<div id="player-container"  >
+	<br/>
+	<br/>
+	<br/>
+	<%= link_to "Two Player Game", multiplayer_game_path, id:"two-players-game-button", class:"button", remote:true %>
+
+	<br/ >
+	<br/>
+	  <button id="single-player-matching-game">Single Player Game</button>
+	<br/>
+	<%= link_to "hidden-link", matching_game_div_path ,id:"render-matching-link", remote:true %>
+
+</div>
+
+<div class="row text-center" id="solver-container">
+	<%= render '/players/solver' %>
+</div>
+
+<div id="hinter-container">
+	<%= render '/players/hinter' %>
+</div>
+
+<div id="forever-loading-icon">
+	<%= render '/players/forever_loading_icon'%>
+</div>
+
+
+<!--Hints that the solver can see-->
+<div id="hint-1-to-solver">  
+  <div class="row text-center">
+  	<div class="small-9 columns" style="padding-top:8px; padding-right: 0px;text-align: right;">عدد حركات التشكيل:</div>
+  	<div class="small-3 columns" id="small-magic-wand-icon">&nbsp;</div>
+  </div>
+  <div class="row text-center" id="hint-1-value">12</div>
+</div> <!--/hint-1-to-solver -->
+
+<div id="hint-2-to-solver">  
+  <div class="row text-center">
+  	<div class="small-9 columns" style="padding-top:8px; padding-right: 0px;text-align: right;">حركت التشكيل:</div>
+  	<div class="small-3 columns" id="small-magic-wand-icon">&nbsp;</div>
+  </div>
+  <div class="row text-center" id="hint-2-value"> فتحة - ضمة - كَسرة</div>
+</div> <!--/hint-2-to-solver -->
+
+<div id="hint-3-to-solver">  
+  <div class="row text-center">
+  	<div class="small-9 columns" style="padding-top:8px; padding-right: 0px;text-align: right;">الكلمة بالfranco:</div>
+  	<div class="small-3 columns" id="small-magic-wand-icon">&nbsp;</div>
+  </div>
+  <div class="row text-center" id="hint-3-value"> tajedoho</div>
+</div> <!--/hint-3-to-solver -->
+
+<div class="row text-center" id="hint_sent_alert_container">
+	<div class="small-3 columns">&nbsp;</div>
+	<div data-alert class="small-6 columns alert-box success radius" id="hint_sent_alert">
+		أٌرسِلت المُساعدة
+	  <!--<a href="#" class="close">&times;</a>-->
+	</div>
+	<div class="small-3 columns">&nbsp;</div>
+</div>

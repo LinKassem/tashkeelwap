@@ -1,0 +1,83 @@
+<div class="row text-center" id="userdefinition">
+	<div class="small-1 columns text-center">&nbsp;</div>
+	<div class="small-10 columns text-center">
+	  <h3><bdi><span><b id="solver-name">Solver</b></span></bdi> : إكتُب الكَلِمة التي في الإطار مع إختيار التشكل المناسب لكل حرف.  </h3>
+	</div>
+	<div class="small-1 columns text-center">&nbsp;</div>
+</div><!--/userdefinition-->
+
+<div class="row">
+
+  <div class="large-4 columns text-center" align="center">
+	  <div class="row text-center">&nbsp;</div>
+	  <div class="row text-center" id="wait_before_requesting_hint_label">
+	  	<span class="alert radius label">إنتظر وصول المٌساعدة السابقة!</span>
+	  </div> 
+	  <div class="row text-center">
+	  	<div class="small-2 columns text-center" >&nbsp;</div>
+	  	<div class="small-8 columns text-center has-tip tip-top" data-tooltip aria-haspopup="true" title="إضغط هنا لطلب المساعدة" id="ask-for-hint-icon-container">
+	  		<div id="magicwandicon" onclick="request_hint()" data-hint-number="1">&nbsp;</div>
+	  	</div>
+	  	<div class="small-2 columns text-center">&nbsp;</div>
+	  </div>
+	  <div class="row text-center" id="help-info-div" style="padding-top:10px;">
+	  	<div class="small-1 columns text-center">&nbsp;</div>
+	  	<div class="small-10 columns text-center">
+	  		<span><b id="you-have"> لديكَ </b>
+	  		<span class="secondary round label" id="help-label"><b>٣</b></span><b id="verb"> مُساعدات </b></span>
+	  	</div>
+	  	<div class="small-1 columns text-center">&nbsp;</div>
+	  </div>
+	  <!--Append the rest of the divs here-->
+	</div> <!--/large-4 columns-->
+
+  <div class="small-8 columns text-center" align="center">
+  	<div class="row text-center">
+  		<p class="wordframe" style="font-size:24px">
+	  		<br/>
+	  		<br/>
+	  		<b id="solver-word">تجده</b>
+	  	</p>
+  	</div>
+
+  	<div class="row text-center">
+	  	<div class="large-3 columns">&nbsp;</div>
+	  	<div class="large-6 columns">
+
+	  		<form action="/players/test" id="solver_word_form"  method="POST">
+		      <div class="row collapse prefix-round">
+		        <div class="small-3 columns">
+		          <a class="button prefix" onclick="submit_solver_word_entry_form()"><img src='/assets/arrow-88-16.png'></img></a>
+		        </div>
+		        <div class="small-9 columns">
+		          <input type="text" placeholder="الكلمة بالتشكيل" name="textField" id="solver-input-field">
+		        </div>
+		      </div>
+ 				
+	  	
+	  	</div> <!--/large-6 columns-->
+	  	<div class="large-3 columns">
+	  		<input type="text" placeholder="user id" name="hidden-solver-id" id="hidden-solver-id-field" style="visibility:hidden">
+			</div>
+		</form>  	
+  	</div>
+	
+		<div class="row text-center">
+			<div class="large-3 columns">&nbsp;</div>
+			<div class="large-6 columns">
+				<ul class="large-block-grid-4" id="diacritics">
+					<li><img src="/assets/tashkeel44.jpg" onclick="add_dama()"></img></li>
+					<li><img src="/assets/tashkeel66.jpg" onclick="add_fatha()"></img></li>
+					<li><img src="/assets/tashkeel22.jpg" onclick="add_kasra()"></img></li>
+					<li><img src="/assets/tashkeel88.png" onclick="add_shadda()"></img></li>
+					<li><img src="/assets/tashkeel33.jpg" onclick="add_tanweenMadmoum()"></img></li>
+					<li><img src="/assets/tashkeel55.jpg" onclick="add_tanweenMaftouh()"></img></li>
+					<li><img src="/assets/tashkeel11.jpg" onclick="add_tanweenMaksour()"></img></li>
+					<li><img src="/assets/tashkeel77.jpg" onclick="add_skoon()"></img></li>
+				</ul>	
+			</div>
+			<div class="large-3 columns">&nbsp;</div>
+		</div>
+
+	</div> <!--/small-8 colums-->
+</div>

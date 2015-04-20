@@ -1,0 +1,249 @@
+.top-bar .name h1 a  {
+	  position: fixed;
+    right: 173px;	
+}
+
+.top-bar .left {
+	position: fixed;
+	left: 173px;
+}
+
+.top-bar-section .right .title-area .name h1 a:hover {
+  background-color: #1BAEDC;
+  background: #1BAEDC;
+}
+
+table tbody tr th, table tbody tr td, table tr td {
+	text-align: center;
+}
+
+#firstRow {
+	padding-top: 50px;
+
+}
+
+table caption {
+	padding-bottom: 10px;
+}
+
+#cupSprite {
+	background: url('/assets/transparent.png') no-repeat -508px -532px;
+	width: 166px;
+	height: 167px;
+}
+
+#fixedsentencerow{
+	height: 167px;
+	text-align: center;
+	/*border: 1px solid red;*/
+}
+
+#carouselRow {
+	height: 400px;
+	padding-top: 14px;
+}
+
+/*cphere*/
+#signin.f-dropdown.small.content.open.f-open-dropdown{
+	position: absolute;
+	left: 255px !important;
+	margin-top: 7px;
+}
+/*cphere*/
+#signup.f-dropdown.small.content.open.f-open-dropdown{
+	position: absolute;
+	left: 195px !important;
+	margin-top: 7px;
+}
+/*cphere*/
+#useroptions.f-dropdown.small.content.open.f-open-dropdown{
+	position: absolute;
+	left: 178px !important;
+	padding-bottom: 10px !important;
+	margin-top: 7px;
+}
+
+.f-dropdown {
+	margin-top: 0;
+	display: none;
+}
+
+.f-open-dropdown {
+	margin-top: 0;
+	display: initial;
+}
+
+.f-dropdown.small {
+  max-width: 230px;
+}
+
+#signInButton, #signUpButton {
+	background-color: #1BAEDC;
+}
+
+.top-bar-section ul li {
+  background-color: #1BAEDC;
+}
+
+
+#userprofile {
+	width: 300px;
+	height: 340px;
+	padding-top: 15px;
+	padding-right: 15px;
+	padding-left: 15px;
+	background-color: whitesmoke;
+	border: 2px solid #1BAEDC;
+	border-radius: 5px;
+}
+
+#useravatar {
+	width: 100px;
+	height: 100px;
+	align: center;
+}
+
+#username	{
+	width: 200px;
+	height: 50px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	clear:both; 
+}
+
+#username p{
+	font-size: 20px;
+	color: #1BAEDC !important;
+	clear:both;
+}
+
+#userinfo{
+	width: 268px;
+	height: 100px;
+	clear:both;
+	padding: 10px;
+
+}
+
+/***********************************/
+
+#userinfoheader, #userinfodata {
+  display:table;
+  width: 100%;
+  table-layout: fixed;
+  padding-bottom: 10px;
+}
+
+#userinfoheader span, #userinfodata span{
+  display:table-cell;
+  text-align:center;
+  border-right: 1px solid grey; /*grey and not whitesmoke*/
+}
+
+#userinfoheader span#removerightborder {
+    border: 1px solid whitesmoke;
+}
+
+#userinfodata span{
+	border: 1px solid whitesmoke;
+}
+
+/*********************/
+
+.userbadgescontainer{
+	height: 100px;
+	padding: 10px;	
+}
+
+#userbadges {
+    list-style-type: none;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#userbadges li{
+    display: inline-block;
+    width: 41px;
+    height:41px;
+}
+
+#userbadges li div{
+    display: inline-block;
+}
+
+/********************/
+#badgeone {
+	background: url('/assets/transparent25percent.png') no-repeat -79px -77px;
+	width: 40px;
+	height: 40px;
+}
+
+#badgetwo {
+	background: url('/assets/transparent25percent.png') no-repeat -30px -76px;
+	width: 41px;
+	height: 41px;
+}
+
+.spinnercontainer {
+  position: relative;
+  margin: 0 auto;
+  padding: 27px;
+}
+
+#spinner {
+	position: absolute;
+  top: 0;
+  /* center horizontally */
+  left: -1000px;
+  right: -1000px;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+
+.reveal-modal-bg {
+	position:fixed;
+}
+/*********************/
+
+.has-tip:hover, .has-tip{
+	border-bottom: 0px;
+}
+
+/**********/
+
+button.cbutton:hover, button.cbutton:focus {
+	background-color: #FFFFFF;
+}
+
+.cbutton.cbutton--click, .cbutton:focus {
+	color: #FFFFFF;
+}
+
+textarea[disabled] {
+	resize: none;
+	min-height: 37px;
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+
+textarea {
+	resize: none;
+	min-height: 37px;
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+
+/**********************/
+
+.destroy-Tooltip {
+	display: none !important;
+}
+
+.alert-box.success.radius {
+	background-color: #0DD48D;
+	border-color: #0DD48D;
+
+}

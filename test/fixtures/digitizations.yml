@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_digitization: MyString
+  repetition: 1
+  user_validation: 1
+
+two:
+  user_digitization: MyString
+  repetition: 1
+  user_validation: 1

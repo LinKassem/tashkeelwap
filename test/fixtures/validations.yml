@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_digitization: MyString
+  word_image_link: MyString
+  word_id: 1
+  certinity_rate: 1
+  known: false
+
+two:
+  user_digitization: MyString
+  word_image_link: MyString
+  word_id: 1
+  certinity_rate: 1
+  known: false

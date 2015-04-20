@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  player_id: 1
+  email: MyString
+  name: MyString
+  password: MyString
+  score: 1
+
+two:
+  player_id: 1
+  email: MyString
+  name: MyString
+  password: MyString
+  score: 1

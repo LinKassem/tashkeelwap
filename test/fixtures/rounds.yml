@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  round_id: 1
+  hint_requested: 1
+  hint_sent: 1
+
+two:
+  round_id: 1
+  hint_requested: 1
+  hint_sent: 1

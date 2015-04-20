@@ -1,0 +1,2 @@
+class DigitizationsController < ApplicationController
+end

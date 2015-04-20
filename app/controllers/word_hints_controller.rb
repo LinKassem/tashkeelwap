@@ -1,0 +1,2 @@
+class WordHintsController < ApplicationController
+end

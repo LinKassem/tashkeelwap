@@ -1,0 +1,42 @@
+<div id="matching-game">
+	<div id="gameOverModal" class="reveal-modal small text-center" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+		<div class="icon">
+			<p id="gameendicon"></p>
+		</div>
+		<div class="title">
+			<h2 id="modalTitle"> كسبت <span><b>٦٠</b></span> نقطة  </h2>
+			<!--<h2> ستبدأ العب مع شريكُك الأن! </h2>-->
+		</div>
+	  
+	  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	</div>
+
+	<div id="gameModal" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+	  <h2 class="text-center" id="modalTitle"> لعبة الذاكرة </h2>
+	  <p class="lead text-center"> إلعب وإكسب العديد من النقاط !! &nbsp;
+		  <!--<span class="radius secondary label" id="span" style="font-size:15px;">
+		   سنقوم بتنبيهك لحظة إنضمامه 
+		  </span> -->
+		</p>
+	  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+			<section id="game">
+				<div id="cards">
+					<div class="card" style="display: inline-block;">
+						<div class="face front" ></div>
+						<div class="face back" data-image-id="" >
+							<div  class="checkMarks has-tip" data-tooltip aria-haspopup="true" title="هل هما متطابقان تماماً؟">
+										<a id="ok"><img id="checkmarkicon" src="/assets/checkmark-16.png" alt="Yes"></a>
+										<a id="remove"><img id="removeicon" src="/assets/x-mark-16.png" alt="No!"></a>
+							</div> <!-- .checkmarks-->
+						</div> <!--.face back cardAK-->
+					</div> <!-- .card -->
+				</div> <!-- #cards -->
+				<canvas class="canavas" width="80" height="120"></canvas>
+				<canvas class="canavas" width="80" height="120"></canvas>
+				<canvas class="canavas" width="80" height="120"></canvas>
+				<canvas class="canavas" width="80" height="120"></canvas>
+				<canvas class="canavas" width="80" height="120"></canvas>
+				<canvas class="canavas" width="80" height="120"></canvas>
+			</section> <!-- #game -->
+	</div>
+</div>

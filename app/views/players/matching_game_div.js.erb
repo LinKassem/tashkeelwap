@@ -1,0 +1,7 @@
+$(function(){
+	var div = document.getElementById('matching-game');
+	if (div) {
+    div.parentNode.removeChild(div);
+	}
+	$('#render-matching-link').after('<%= j render('players/matching_game')%>');
+});
