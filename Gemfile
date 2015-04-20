@@ -22,7 +22,7 @@ gem 'gon'
 gem 'table_print', '~> 1.5.3'
 gem 'pusher'
 
-#gem 'rails_12factor'
+gem 'rails_12factor'
 
 
 # Use jquery as the JavaScript library
