@@ -23,7 +23,7 @@ gem 'table_print', '~> 1.5.3'
 gem 'pusher'
 
 gem 'rails_12factor'
-
+gem 'ruby', '~> 2.2.1' 
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
