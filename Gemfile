@@ -17,7 +17,7 @@ gem 'coffee-rails', '~> 4.1.0'
 
 gem 'foundation-rails'
 gem 'sass'
-gem 'therubyracer'
+#gem 'therubyracer'
 gem 'devise', '~> 3.4.1'
 gem 'gon'
 gem 'table_print', '~> 1.5.3'
