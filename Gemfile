@@ -7,6 +7,7 @@ gem 'rails', '4.2.0'
 gem 'mysql2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -22,7 +23,8 @@ gem 'gon'
 gem 'table_print', '~> 1.5.3'
 gem 'pusher'
 
-gem 'rails_12factor'
+gem 'rails_12factor', group: :production
+gem 'puma'
 
 
 # Use jquery as the JavaScript library

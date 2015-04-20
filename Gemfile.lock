@@ -96,6 +96,8 @@ GEM
       mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
     pg (0.18.1)
+    puma (2.11.2)
+      rack (>= 1.1, < 2.0)
     pusher (0.14.4)
       httpclient (~> 2.5)
       multi_json (~> 1.0)
@@ -194,6 +196,7 @@ DEPENDENCIES
   jquery-rails
   mysql2
   pg (~> 0.18.1)
+  puma
   pusher
   rails (= 4.2.0)
   rails_12factor
