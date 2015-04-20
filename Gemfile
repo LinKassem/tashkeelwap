@@ -22,6 +22,8 @@ gem 'gon'
 gem 'table_print', '~> 1.5.3'
 gem 'pusher'
 
+#gem 'rails_12factor'
+
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -39,8 +41,20 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'unicorn'
 
 # Use Capistrano for deployment
-gem 'capistrano'
-gem 'capistrano-passenger'
+#gem 'capistrano'
+#gem 'capistrano-passenger'
+
+
+
+
+group :production do
+  gem 'pg', '~> 0.18.1'
+end
+
+
+
+
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
