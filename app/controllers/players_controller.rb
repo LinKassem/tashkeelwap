@@ -164,10 +164,13 @@ class PlayersController < ApplicationController
     @channel = params[:channel_name]
     @word_digitization = params[:word_digitization]
     @word_id = params[:word_id]
-    puts "BALAAAAAAAAAAABEZ00000000000"
+
     Pusher[@channel].trigger_async('solver_submitted_word', {}) 
 
   end
 
-end
+  # used to reset the solver and the hinter views
+  def reset_hinter_solver_views
+  end
 
+end

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   post  '/send_second_hint'         => 'players#send_second_hint'
   post  '/send_third_hint'         => 'players#send_third_hint'
   post  '/record_solver_entry'      => 'players#record_solver_entry'  # need to think about it more
-  get '/back_to_home_page' => 'players#show'
+  get   '/reset_hinter_solver_views' => 'players#reset_hinter_solver_views'
                                                   
   get   '/multiplayer_game' => 'players#multiplayer_game'
 

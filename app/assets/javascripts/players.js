@@ -59,24 +59,6 @@ $(function(){
   	common_game_channel = pusher.subscribe(data.channel_name);
   	common_game_channel.bind('pusher:subscription_succeeded', function() {
 			console.log("subscribtion to common_game_channel succeeded");
-
-      phase1_started = true;
-      setTimeout(function(){
-        if ( phase1_started && (!phase1_ended)){
-          if(data.initiated_by == gon.player_id){
-            $('#hinter-container').css('display', 'none');
-            console.log("You are a solver in PHASE 2");
-            prepare_solver_view(data.play_with_name, data.word2_ocr, data.channel_name);
-          } else if (data.play_with == gon.player_id){
-            $('#solver-container').css('display', 'none');
-            console.log("you are a HINTER in PHASE 2");
-            prepare_hinter_view(data.initiated_by_name, data.word2_image_url);
-          }
-        }
-      }, 120000);
-
-
-
 		});
 
     common_game_channel.bind('respond_to_hint_request_event', function(data){
@@ -143,6 +125,8 @@ $(function(){
 
 
     common_game_channel.bind('solver_submitted_word', function(){
+      
+//HANDLE CASES OF ROUND1 & ROUND2
       console.log("GAME ENDED ya SHABAB");
       $('#gameOverModal').foundation('reveal', 'open');
       setTimeout(function(){
@@ -395,3 +379,38 @@ function add_skoon(){
   $('#solver-input-field').val(value + 'ْ');
 }
 /////////////////////////////////////////////
+
+
+/*
+      bool_hint1_requested = false;
+      bool_hint2_requested = false;
+      bool_hint3_requested = false;
+
+      bool_hint1_received = false;
+      bool_hint2_received = false;
+      bool_hint3_received = false;
+
+      phase1_started = true;
+      setTimeout(function(){
+        //if ( phase1_started && (!phase1_ended)){
+          $('#reset-hinter-solver-views').click();
+            bool_hint1_requested = false;
+            bool_hint2_requested = false;
+            bool_hint3_requested = false;
+
+            bool_hint1_received = false;
+            bool_hint2_received = false;
+            bool_hint3_received = false;
+            
+          if(data.initiated_by == gon.player_id){
+            $('#hinter-container').css('display', 'none');
+            console.log("You are a solver in PHASE 2");
+            prepare_solver_view(data.play_with_name, data.word2_ocr, data.channel_name);
+          } else if (data.play_with == gon.player_id){
+            $('#solver-container').css('display', 'none');
+            console.log("you are a HINTER in PHASE 2");
+            prepare_hinter_view(data.initiated_by_name, data.word2_image_url);
+          }
+        //}
+      }, 12000);
+*/
