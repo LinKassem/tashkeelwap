@@ -68,6 +68,18 @@ class PlayersController < ApplicationController
       @word_ocr = Word.find(@index).ocr_digitization
       @word_image_url = Word.find(@index).word_image_url
 
+      @index2 = @random_number.rand(1..(Word.count))
+      while @index == @index2
+        @index2 = @random_number.rand(1..(Word.count))
+      end
+
+      @word2_ocr = Word.find(@index2).ocr_digitization
+      @word2_image_url = Word.find(@index2).word_image_url
+
+
+      @word_ocr = Word.find(@index).ocr_digitization
+      @word_image_url = Word.find(@index).word_image_url
+
       @waiting_player = Waiting.last
       @waiting_player_id = @waiting_player.waiting_player_id.to_s
       @waiting_player.destroy
@@ -88,7 +100,10 @@ class PlayersController < ApplicationController
                   'play_with_name': current_player.name,
                   'word_id': @index,
                   'word_ocr': @word_ocr,
-                  'word_image_url': @word_image_url
+                  'word_image_url': @word_image_url,
+                  'word2_id': @index2,
+                  'word2_ocr': @word2_ocr,
+                  'word2_image_url': @word2_image_url
                 }
 
       Pusher.trigger_async( channels, 'private-one-to-one-game-request', eventData);
@@ -144,7 +159,15 @@ class PlayersController < ApplicationController
     Pusher[@channel].trigger_async('send_third_hint_event', data)    
   end
 
+  def record_solver_entry 
+    # take the values that Later on we need to send to the database
+    @channel = params[:channel_name]
+    @word_digitization = params[:word_digitization]
+    @word_id = params[:word_id]
+    puts "BALAAAAAAAAAAABEZ00000000000"
+    Pusher[@channel].trigger_async('solver_submitted_word', {}) 
 
-
+  end
 
 end
+

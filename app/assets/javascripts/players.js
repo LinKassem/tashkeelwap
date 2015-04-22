@@ -10,6 +10,14 @@ var bool_hint1_received = false;
 var bool_hint2_received = false;
 var bool_hint3_received = false;
 
+var phase1_started = false;
+var phase1_ended = false;
+var phase2_started = false;
+var phase2_ended = false;
+
+var word_id; // this is the word Id during the whole session
+
+
 
 
 $(function(){
@@ -37,6 +45,7 @@ $(function(){
   });
 
   current_private_channel.bind('private-one-to-one-game-request', function(data) {
+    word_id = data.word_id
 
   	if(data.initiated_by == gon.player_id){
   		console.log("You are a hinter"); 
@@ -45,12 +54,29 @@ $(function(){
   	} else if (data.play_with == gon.player_id){
   		console.log("you are a solver");
   		prepare_solver_view(data.play_with_name, data.word_ocr, data.channel_name);
-
   	}
     channel_name = data.channel_name;
   	common_game_channel = pusher.subscribe(data.channel_name);
   	common_game_channel.bind('pusher:subscription_succeeded', function() {
 			console.log("subscribtion to common_game_channel succeeded");
+
+      phase1_started = true;
+      setTimeout(function(){
+        if ( phase1_started && (!phase1_ended)){
+          if(data.initiated_by == gon.player_id){
+            $('#hinter-container').css('display', 'none');
+            console.log("You are a solver in PHASE 2");
+            prepare_solver_view(data.play_with_name, data.word2_ocr, data.channel_name);
+          } else if (data.play_with == gon.player_id){
+            $('#solver-container').css('display', 'none');
+            console.log("you are a HINTER in PHASE 2");
+            prepare_hinter_view(data.initiated_by_name, data.word2_image_url);
+          }
+        }
+      }, 120000);
+
+
+
 		});
 
     common_game_channel.bind('respond_to_hint_request_event', function(data){
@@ -116,6 +142,21 @@ $(function(){
     });
 
 
+    common_game_channel.bind('solver_submitted_word', function(){
+      console.log("GAME ENDED ya SHABAB");
+      $('#gameOverModal').foundation('reveal', 'open');
+      setTimeout(function(){
+        $('#gameOverModal').foundation('reveal', 'close');
+      }, 6000);
+      $.ajax({
+        url : "/increment_player_score",
+        type : "post"
+      });
+      window.location.href=window.location.href // refresh to redirect to the root page
+
+    });
+
+
   });
 
   /*common_game_channel.bind('solver_end_game_event', function(data) {
@@ -128,6 +169,7 @@ $(function(){
   $('#submit-first-hint-button').click(submit_first_hint);
   $('#submit-second-hint-button').click(submit_second_hint);
   $('#submit-third-hint-button').click(submit_third_hint);
+  $('#submit-solver-word-entry-button').click(submit_solver_entry);
 
 }) //--end of documentReady function
 
@@ -202,6 +244,30 @@ function submit_third_hint(){
 
 
 
+function submit_solver_entry(){
+  var solver_entry_value = $('#solver-input-field').val();
+  if ( !($.trim(solver_entry_value).length > 0) ){
+    $('textarea#solver-input-field').css('margin-bottom','0px');
+    $('#empty_solver_entry').css('display','block');
+  } else {
+    $('#empty_solver_entry').css('display','none'); //remove the error
+    $('#solver-input-field').prop('disabled', true); //disable the textfield    
+    $('#submit-solver-word-entry-button').addClass('disabled'); // disable submission button 
+    $.ajax({
+    url : "/record_solver_entry",
+    type : "post",
+    data : { channel_name: channel_name,
+             word_digitization: solver_entry_value,
+             word_id: word_id,
+           }
+    });
+    console.log("Solver submitted his entry!");
+  }
+}
+
+
+
+
 
 
 
@@ -222,10 +288,6 @@ function prepare_solver_view(solver_name, word_ocr, solver_id){
   $('#solver-word').html(word_ocr);
   //var old_value = $('#hidden-solver-id-field').val();
   $('#hidden-solver-id-field').val(solver_id);
-}
-
-function submit_solver_word_entry_form(){
-	$('#solver_word_form').submit();
 }
 
 

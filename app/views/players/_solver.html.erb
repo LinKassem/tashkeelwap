@@ -43,23 +43,22 @@
   	<div class="row text-center">
 	  	<div class="large-3 columns">&nbsp;</div>
 	  	<div class="large-6 columns">
-
-	  		<form action="/players/test" id="solver_word_form"  method="POST">
-		      <div class="row collapse prefix-round">
-		        <div class="small-3 columns">
-		          <a class="button prefix" onclick="submit_solver_word_entry_form()"><img src='/assets/arrow-88-16.png'></img></a>
-		        </div>
-		        <div class="small-9 columns">
-		          <input type="text" placeholder="الكلمة بالتشكيل" name="textField" id="solver-input-field">
-		        </div>
-		      </div>
- 				
-	  	
+	      <div class="row collapse prefix-round">
+	        <div class="small-3 columns">
+	          <i href="#" class="button prefix" id="submit-solver-word-entry-button">
+	          	<img src='/assets/arrow-88-16.png'></img>
+	          </i>
+	        </div>
+	        <div class="small-9 columns">
+	          <textarea type="text" placeholder="الكلمة بالتشكيل" id="solver-input-field"></textarea>
+	          <small class="error" id="empty_solver_entry" style="display:none;">أدخل الكلمة أولاً!</small>
+	        </div>
+	      </div>			
 	  	</div> <!--/large-6 columns-->
+<!--I am not sure that this div is needed-->
 	  	<div class="large-3 columns">
-	  		<input type="text" placeholder="user id" name="hidden-solver-id" id="hidden-solver-id-field" style="visibility:hidden">
+	  		<input type="text" placeholder="user id" name="hidden-solver-id" id="hidden-solver-id-field" style="visibility:hidden">  
 			</div>
-		</form>  	
   	</div>
 	
 		<div class="row text-center">
