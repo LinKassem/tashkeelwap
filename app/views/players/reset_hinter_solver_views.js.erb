@@ -5,10 +5,4 @@ $(function(){
 	$("#hinter-container").html('');
 	$("#hinter-container").html('<%= j render('players/hinter')%>');
 	$('#submit-first-hint-button').mouseout(); //this will disable the tooltip <Quick fix> 
-
-	$('#hint-1-to-solver').remove();
-	$('#hint-2-to-solver').remove();
-	$('#hint-3-to-solver').remove();
-
-	$("#player-container").after('<%= j render('players/hints_to_solver')%>');
 });
