@@ -11,16 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150414223854) do
-
-  create_table "digitizations", force: :cascade do |t|
-    t.string   "user_digitization", limit: 255
-    t.integer  "repetition",        limit: 4
-    t.integer  "user_validation",   limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.integer  "word_id",           limit: 4
-  end
+ActiveRecord::Schema.define(version: 20150425192443) do
 
   create_table "players", force: :cascade do |t|
     t.string   "email",                  limit: 255
@@ -43,14 +34,16 @@ ActiveRecord::Schema.define(version: 20150414223854) do
   add_index "players", ["email"], name: "index_players_on_email", unique: true, using: :btree
   add_index "players", ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true, using: :btree
 
-  create_table "rounds", force: :cascade do |t|
-    t.integer  "hint_requested", limit: 4
-    t.integer  "hint_sent",      limit: 4
+  create_table "sessions", force: :cascade do |t|
+    t.integer  "player_id",    limit: 4
+    t.integer  "hinter_id",    limit: 4
+    t.integer  "word_id",      limit: 4
+    t.string   "digitization", limit: 255
+    t.string   "hint_1",       limit: 255
+    t.string   "hint_2",       limit: 255
+    t.string   "hint_3",       limit: 255
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.integer  "word_id",        limit: 4
-    t.integer  "hinter_id",      limit: 4
-    t.integer  "solver_id",      limit: 4
   end
 
   create_table "validations", force: :cascade do |t|
@@ -67,14 +60,6 @@ ActiveRecord::Schema.define(version: 20150414223854) do
     t.integer  "waiting_player_id", limit: 4
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
-  end
-
-  create_table "word_hints", force: :cascade do |t|
-    t.string   "first_hint",  limit: 255
-    t.string   "second_hint", limit: 255
-    t.string   "third_hint",  limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
   end
 
   create_table "words", force: :cascade do |t|

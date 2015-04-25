@@ -17,7 +17,7 @@ class Player < ActiveRecord::Base
 	#before_action :authenticate! except => {Those actions that do not require authentication}
 
 	# Relations
-	has_many :rounds
+	has_many :sessions
 
 	# Methods
   def ensure_authentication_token

@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  solver_id: 1
+  hinter_id: 1
+  word_id: 1
+  digitization: MyString
+  hint_1: MyString
+  hint_2: MyString
+  hint_3: MyString
+
+two:
+  id: 1
+  solver_id: 1
+  hinter_id: 1
+  word_id: 1
+  digitization: MyString
+  hint_1: MyString
+  hint_2: MyString
+  hint_3: MyString

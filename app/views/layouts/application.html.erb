@@ -37,7 +37,8 @@
       </div> <!--small-8 columns-->
     </div><!--row-->
   </body>
-   <%= javascript_include_tag "application" %>   
-   <%= include_gon %>
+    <%= javascript_include_tag "application" %>   
+    <%= include_gon(:init => true) %>
+    <%= Gon::Base.render_data({}) %>
    <script src="//js.pusher.com/2.2/pusher.min.js" type="text/javascript"></script>
 </html>

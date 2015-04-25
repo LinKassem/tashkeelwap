@@ -96,7 +96,7 @@ function setBackgroundImagesOfCards(ListOfImages, ListOfObjectIds, BackgroundCol
 			var imageUrl = ListOfImages[i];
 			var elementId = ListOfObjectIds[i] ;
 			var color = backgroundColors[i];
-			$(elementId).css("background-image", imageUrl);
+			$(elementId).css("background-image", "url("+ imageUrl + ")");
 			//$(elementId).css("background-color", color);
 	}
 }
