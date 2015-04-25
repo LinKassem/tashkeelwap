@@ -15,6 +15,8 @@ var phase1_ended = false;
 var phase2_started = false;
 var phase2_ended = false;
 
+var interval;
+
 var word_id; // this is the word Id during the whole session
 
 
@@ -50,12 +52,21 @@ $(function(){
     prepare_game_side_bar(data.initiated_by_name, data.play_with_name);
 
   	if(data.initiated_by == gon.player_id){
-  		console.log("You are a hinter"); 
-  		prepare_hinter_view(data.initiated_by_name, data.word_image_url);
-  
+      $('#waiting').css('display', 'none');
+  	  $('#game-explanation-hinter-side').css('display','block');
+      setTimeout(function(){
+        $('#game-explanation-hinter-side').css('display','none');
+        console.log("You are a hinter"); 
+        prepare_hinter_view(data.initiated_by_name, data.word_image_url);        
+      }, 10000);  
   	} else if (data.play_with == gon.player_id){
-  		console.log("you are a solver");
-  		prepare_solver_view(data.play_with_name, data.word_ocr, data.channel_name);
+      $('#player-container').css('display','none');
+      $('#game-explanation-solver-side').css('display','block');
+      setTimeout(function(){
+    		console.log("you are a solver");
+        $('#game-explanation-solver-side').css('display','none');
+    		prepare_solver_view(data.play_with_name, data.word_ocr, data.channel_name);
+      }, 10000);
   	}
     channel_name = data.channel_name;
   	common_game_channel = pusher.subscribe(data.channel_name);
@@ -203,27 +214,15 @@ function game_logic(){
       }, 3000);
     });
 
-
+    // after the solver submits the word we check which state we are in and change the game accordingly
     common_game_channel.bind('solver_submitted_word', function(){
-      
-//HANDLE CASES OF ROUND1 & ROUND2
-      console.log("GAME ENDED ya SHABAB");
-      $('#gameOverModal').foundation('reveal', 'open');
-      setTimeout(function(){
-        $('#gameOverModal').foundation('reveal', 'close');
-      }, 6000);
-      $.ajax({
-        url : "/increment_player_score",
-        type : "post"
-      });
-      window.location.href=window.location.href // refresh to redirect to the root page
-
+      if(phase1_started && !phase1_ended){
+        phase1_ended = true;
+      } else if(phase2_started && !phase2_ended){
+        phase2_ended = true;
+      } 
     });
 }
-
-
-
-
 
 function submit_first_hint(){
   var hint_value = $('#submit-first-hint-value').val();
@@ -323,6 +322,7 @@ function submit_solver_entry(){
 
 
 function prepare_hinter_view(hinter_name, word_image_url) {
+  $('#forever-loading-icon').css('display', 'none');
 	$('#waiting').css('display', 'none');
   $('#hinter-container').css('display','block');
   $('#hinter-name').html(hinter_name);
@@ -330,7 +330,8 @@ function prepare_hinter_view(hinter_name, word_image_url) {
 }
 
 function prepare_solver_view(solver_name, word_ocr, solver_id){
-	$('#player-container').css('display','none');
+	$('#forever-loading-icon').css('display', 'none');
+  $('#player-container').css('display','none');
   $('#solver-container').css('display','block');
   $('#solver-name').html(solver_name);
   $('#solver-word').html(word_ocr);
@@ -486,14 +487,17 @@ function prepare_game_side_bar(player1_name, player2_name){
   //>> Should change the user avatars as well
   $('#player-1-name').html(player1_name);
   $('#player-2-name').html(player2_name);   
-  $('#game-points').html(' ٠ ');
-  start_count_down(120); //change the timer and the progress bar
+  $('#game-points').html(' 120 ');
+  setTimeout(function(){
+    start_count_down(60); //change the timer and the progress bar
+  }, 10000);
+  //>>>>>>>>>>>>>>>>>>>>>>>>>>>should be 120
 }
 
 
 function start_count_down(seconds){
   var counter = seconds;
-  var interval = setInterval(function() {
+  interval = setInterval(function() {
       counter--;
       $('#timer').html(counter)
       $('#game-meter').css('width', '-=2.2');
@@ -513,11 +517,17 @@ function start_count_down(seconds){
   }, 1000);
 }
 
+function stop_count_down(){
+  clearInterval(interval);
+}
+
+
 function reset_game_side_bar(){
   $('#game-progress-bar').removeClass("alert").addClass("success");
   $('#game-meter').css('width','100%');
   $('#timer').css('font-weight', 'normal');
   $('#timer').css('color', 'black');
+  stop_count_down();
   start_count_down(120);
 }
 
