@@ -85,6 +85,7 @@ class PlayersController < ApplicationController
       @waiting_player.destroy
 
       @waiting_player_name = Player.find(@waiting_player.waiting_player_id).name
+      @waiting_player_email = Player.find(@waiting_player.waiting_player_id).email 
 
       @player2_channel = 'private-game_channel-' + @waiting_player_id
 
@@ -96,8 +97,10 @@ class PlayersController < ApplicationController
                   'channel_name': new_channel ,
                   'initiated_by': @waiting_player_id,
                   'initiated_by_name': @waiting_player_name,
+                  'initiated_by_email': @waiting_player_email,
                   'play_with': current_player.id,
                   'play_with_name': current_player.name,
+                  'play_with_email': current_player.email,
                   'word_id': @index,
                   'word_ocr': @word_ocr,
                   'word_image_url': @word_image_url,

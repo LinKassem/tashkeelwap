@@ -47,6 +47,7 @@ $(function(){
   current_private_channel.bind('private-one-to-one-game-request', function(data) {
     word_id = data.word_id
     phase1_started = true;
+    prepare_game_side_bar(data.initiated_by_name, data.play_with_name);
 
   	if(data.initiated_by == gon.player_id){
   		console.log("You are a hinter"); 
@@ -64,8 +65,10 @@ $(function(){
 
     game_logic();
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    setTimeout(function(){
-      if(phase1_started && !phase1_ended){
+// THIS IS THE 2nd part of the game
+    var check = setInterval(function(){
+      if(phase1_started && phase1_ended){
+        reset_game_side_bar();
         $('#reset-hinter-solver-views').click();
         bool_hint1_requested = false;
         bool_hint2_requested = false;
@@ -74,7 +77,8 @@ $(function(){
         bool_hint1_received = false;
         bool_hint2_received = false;
         bool_hint3_received = false;
-        
+        //>>>>>>>>. Need to reset the views in the game_side_bar_view
+        //prepare_game_side_bar(data.initiated_by_name, data.play_with_name);        
         if(data.initiated_by == gon.player_id){
           $('#hinter-container').css('display', 'none');
           console.log("You are a solver in PHASE 2");
@@ -84,9 +88,12 @@ $(function(){
           console.log("you are a HINTER in PHASE 2");
           prepare_hinter_view(data.initiated_by_name, data.word2_image_url);
         }
-
+        clearInterval(check);
       }
-    }, 20000)
+
+    }, 50);
+
+
 
 
 
@@ -455,3 +462,43 @@ function add_skoon(){
         //}
       }, 12000);
 */
+
+function prepare_game_side_bar(player1_name, player2_name){
+  $('#profile-side-bar').css('display', 'none');
+  $('#game-side-bar').css('display', 'block');
+  //>> Should change the user avatars as well
+  $('#player-1-name').html(player1_name);
+  $('#player-2-name').html(player2_name);   
+  $('#game-points').html(' ٠ ');
+  start_count_down(120); //change the timer and the progress bar
+}
+
+
+function start_count_down(seconds){
+  var counter = seconds;
+  var interval = setInterval(function() {
+      counter--;
+      $('#timer').html(counter)
+      $('#game-meter').css('width', '-=2.2');
+      if (counter == 30) {
+        $('#game-progress-bar').removeClass("success").addClass("alert");
+        $('#timer').css('font-weight', 'bold');
+        $('#timer').css('color', 'red');
+      }
+      if (counter == 0){
+        clearInterval(interval); // stop the time 
+        if(phase1_started && !phase1_ended){
+          phase1_ended = true;
+        }
+      }
+  }, 1000);
+}
+
+function reset_game_side_bar(){
+  $('#game-progress-bar').removeClass("alert").addClass("success");
+  $('#game-meter').css('width','100%');
+  $('#timer').css('font-weight', 'normal');
+  $('#timer').css('color', 'black');
+  start_count_down(120);
+}
+

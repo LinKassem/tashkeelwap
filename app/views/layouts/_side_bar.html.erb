@@ -1,5 +1,5 @@
 <% if signed_in? %>
-  <div id="userprofile">
+  <div class="userprofile" id="profile-side-bar">
     <div id="useravatar">
       <%= image_tag avatar_url("linsara1@gmail.com") %>
     </div>
@@ -23,6 +23,60 @@
       </div>  
     </div><!--/userinfo-->
   </div><!--/userprofile-->
+<!-- #game-side-bar -->
+  <div class="userprofile" id="game-side-bar">
+      <div id="usersavatars">
+        <!--later on this will be obtained from the database-->
+        <span id="user1avatar" style="padding-left:25px;"><%= image_tag small_avatar_url("player1@gmail.com") %></span>
+        <span id="with"> مع <span>
+        <span id="user2avatar" style="padding-right:25px"><%= image_tag small_avatar_url("player2@gmail.com") %></span>
+      </div>
+
+      <div id="usernames">
+        <span id="player-1-name"><b> لين </b></span>
+        <span id="player-2-name"><b> محمد </b></span>
+      </div>  
+
+      <div class="gameinfocontainer">
+        <ul id="gameinfo">
+          <li><div id="pointsicon"></div></li>
+          <li><div>&nbsp;&nbsp;</div></li>
+          <li><div id="roundicon"></div></li>
+          <li><div>&nbsp;&nbsp;</div></li>
+          <li><div id="timericon"></div></li> 
+          <li><div>&nbsp;&nbsp;</div></li>
+        </ul>
+      </div>
+
+      <div id="gameinfoheaders">
+        <span id="removerightborder"><b> النقاط </b></span>
+        <span><b> الجولة </b></span>
+        <span><b> الوقت </b></span>
+      </div>
+
+      <div id="gameinfodata">
+        <span id="game-points"> ٧٠ </span>
+        <span id="round-number"> ٢\٣ </span>
+        <span id="timer"> ٠٠٠ </span>
+      </div>    
+      <div class="progress large-12 success" align="left" id="game-progress-bar">
+        <span class="meter"  id="game-meter"></span>
+      </div>
+
+
+      <div class="row"></div>
+  </div><!--/userprofile-->
+<!--/game-side-bar-->
+
+
+
+
+
+
+
+
+
+
 <% else %>
   <div id="cupSprite"></div><!--Cup Icon-->
   <table>
