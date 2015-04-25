@@ -19,7 +19,7 @@ var interval;
 
 var word_id; // this is the word Id during the whole session
 
-
+var type_of_game_over;
 
 
 $(function(){
@@ -107,8 +107,9 @@ $(function(){
     var check_phase2_end = setInterval(function(){
       // asl law howa submitted mosh 7an5'osh lel 7etta di aslun 
       if(phase2_started && phase2_ended){
-
-        //>>>>>>>>>>> Change the contents of the game over modal here
+        if (type_of_game_over == "timeOver"){
+          $('#modalTitle').html('إنتهى الوقت!!');  
+        }
         $('#gameOverModal').foundation('reveal', 'open');
         setTimeout(function(){
           $('#gameOverModal').foundation('reveal', 'close');
@@ -313,14 +314,6 @@ function submit_solver_entry(){
 }
 
 
-
-
-
-
-
-
-
-
 function prepare_hinter_view(hinter_name, word_image_url) {
   $('#forever-loading-icon').css('display', 'none');
 	$('#waiting').css('display', 'none');
@@ -512,6 +505,7 @@ function start_count_down(seconds){
           phase1_ended = true;
         }else if(phase2_started && !phase2_ended ){
           phase2_ended = true;
+          type_of_game_over = "timeOver"
         }
       }
   }, 1000);
