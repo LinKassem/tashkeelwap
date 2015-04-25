@@ -66,8 +66,9 @@ $(function(){
     game_logic();
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // THIS IS THE 2nd part of the game
-    var check = setInterval(function(){
+    var check_phase2_start = setInterval(function(){
       if(phase1_started && phase1_ended){
+        phase2_started = true;
         reset_game_side_bar();
         $('#reset-hinter-solver-views').click();
         bool_hint1_requested = false;
@@ -88,9 +89,26 @@ $(function(){
           console.log("you are a HINTER in PHASE 2");
           prepare_hinter_view(data.initiated_by_name, data.word2_image_url);
         }
-        clearInterval(check);
+        clearInterval(check_phase2_start);
       }
+    }, 50);
+    
+    var check_phase2_end = setInterval(function(){
+      // asl law howa submitted mosh 7an5'osh lel 7etta di aslun 
+      if(phase2_started && phase2_ended){
 
+        //>>>>>>>>>>> Change the contents of the game over modal here
+        $('#gameOverModal').foundation('reveal', 'open');
+        setTimeout(function(){
+          $('#gameOverModal').foundation('reveal', 'close');
+        }, 6000);
+        $.ajax({
+          url : "/increment_player_score",
+          type : "post"
+        });
+        window.location.href=window.location.href // refresh to redirect to the root page
+        clearInterval(check_phase2_end);
+      }
     }, 50);
 
 
@@ -275,7 +293,6 @@ function submit_third_hint(){
 
 
 function submit_solver_entry(){
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
   var solver_entry_value = $('#solver-input-field').val();
   if ( !($.trim(solver_entry_value).length > 0) ){
     $('textarea#solver-input-field').css('margin-bottom','0px');
@@ -379,7 +396,7 @@ function respond_to_hint_three(){
   $('#ask-for-hint-icon-container').removeAttr("title");
   $('#ask-for-hint-icon-container.tooltip.tip-top').addClass("destroy-Tooltip");
   // Changes in the hinter view
-  $('#small-magic-wand-icon-hinter').css('opacity','1');
+  $('#small-magic-wand-icon-h inter').css('opacity','1');
   $('#submit-third-hint-value').prop('disabled', false);
   $('#submit-third-hint-button').removeClass("disabled");
   $('#submit-third-hint-button').mouseover(); //this will enable the tooltip to open 
@@ -489,6 +506,8 @@ function start_count_down(seconds){
         clearInterval(interval); // stop the time 
         if(phase1_started && !phase1_ended){
           phase1_ended = true;
+        }else if(phase2_started && !phase2_ended ){
+          phase2_ended = true;
         }
       }
   }, 1000);
