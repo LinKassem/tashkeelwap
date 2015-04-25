@@ -93,10 +93,10 @@ var backgroundColors = [
 
 function setBackgroundImagesOfCards(ListOfImages, ListOfObjectIds, BackgroundColors) {
 		for(var i = 0; i < ListOfImages.length; i++){
-			var imageUrl = ListOfImages[i];
+			var imageUrl = "url(<%= asset_path('" + ListOfImages[i] + "') %>)" ;
 			var elementId = ListOfObjectIds[i] ;
 			var color = backgroundColors[i];
-			$(elementId).css("background-image", "url("+ imageUrl + ")");
+			$(elementId).css("background-image", imageUrl);
 			//$(elementId).css("background-color", color);
 	}
 }
