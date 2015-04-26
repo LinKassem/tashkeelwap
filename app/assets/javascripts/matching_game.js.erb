@@ -42,8 +42,8 @@ function prepareMatchingGame(){
 		$(this).click(selectCard);			
 	});
 
-	setBackgroundImagesOfCards(gon.validation_words_images, ListOfObjectIds, backgroundColors);
-	//setBackgroundImagesOfCards(gon.test_array, ListOfObjectIds, backgroundColors);
+	//setBackgroundImagesOfCards(gon.validation_words_images, ListOfObjectIds, backgroundColors);
+	setBackgroundImagesOfCards(gon.test_array, ListOfObjectIds, backgroundColors);
 
 	setBackgroundImagesOfCardsD(gon.validation_words_digitizations, ListOfObjectIdsD, gon.validation_words_ids);
 }
@@ -104,15 +104,17 @@ function setBackgroundImagesOfCards(ListOfImages, ListOfObjectIds, BackgroundCol
 			$(elementId).css("background-image",dynamic_asset_path);
  			//$(elementId).css("background-color", color);
  			*/
+ 			console.log("++++++++++++++++++++++++++++++++++")
 			console.log(ListOfImages[i]);
-			console.log("++++++++++++++++++++++++++++++++++")
- 			var elementId = ListOfObjectIds[i] ;
- 			var color = backgroundColors[i];
- 			var s = "<%= asset_path('"+ ListOfImages[i] + "') %>";
- 			console.log(s + "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+ 			//var elementId = ListOfObjectIds[i] ;
+ 			//var color = backgroundColors[i];
+ 			//var s = "<%= asset_path('"+ ListOfImages[i] + "') %>";
+ 			//console.log(s + "sssssssssssss");
 			//$(elementId).css("background-image","url('" + s +"')"); >>>> partially correct 
  			//$(elementId).css("background-color", color);
- 			$(elementId).css("background-image", ListOfImages[i]);
+ 			$(elementId).css("background-image","url('" + ListOfImages[i] +"')");
+ 			console.log("url('" + ListOfImages[i] +"')");
+ 			console.log("----------------------------------------")
 
 	}
 }
