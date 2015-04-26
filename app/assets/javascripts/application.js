@@ -16,7 +16,7 @@
 //= require foundation
 //= require slick.min.js
 //= require classie.js
-//= require matching_game.js.erb
+
 
 
 
