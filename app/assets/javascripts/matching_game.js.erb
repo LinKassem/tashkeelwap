@@ -42,8 +42,8 @@ function prepareMatchingGame(){
 		$(this).click(selectCard);			
 	});
 
-	//setBackgroundImagesOfCards(gon.validation_words_images, ListOfObjectIds, backgroundColors);
-	setBackgroundImagesOfCards(gon.test_array, ListOfObjectIds, backgroundColors);
+	setBackgroundImagesOfCards(gon.validation_words_images, ListOfObjectIds, backgroundColors);
+	//setBackgroundImagesOfCards(gon.test_array, ListOfObjectIds, backgroundColors);
 
 	setBackgroundImagesOfCardsD(gon.validation_words_digitizations, ListOfObjectIdsD, gon.validation_words_ids);
 }
@@ -96,13 +96,24 @@ var backgroundColors = [
 
 function setBackgroundImagesOfCards(ListOfImages, ListOfObjectIds, BackgroundColors) {
  		for(var i = 0; i < ListOfImages.length; i++){
-			var dynamic_asset_path = ListOfImages[i];	
+			/*var dynamic_asset_path = ListOfImages[i];	
 			console.log(dynamic_asset_path);
 			console.log("++++++++++++++++++++++++++++++++++")
  			var elementId = ListOfObjectIds[i] ;
  			var color = backgroundColors[i];
 			$(elementId).css("background-image",dynamic_asset_path);
  			//$(elementId).css("background-color", color);
+ 			*/
+			console.log(ListOfImages[i]);
+			console.log("++++++++++++++++++++++++++++++++++")
+ 			var elementId = ListOfObjectIds[i] ;
+ 			var color = backgroundColors[i];
+ 			var s = "<%= asset_path('"+ ListOfImages[i] + "') %>";
+ 			console.log(s + "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+			$(elementId).css("background-image","url('" + s +"')");
+ 			//$(elementId).css("background-color", color);
+
+
 	}
 }
 
