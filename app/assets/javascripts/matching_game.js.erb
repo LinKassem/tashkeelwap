@@ -91,19 +91,24 @@ var backgroundColors = [
 "#8587B2",
 ];
 
-function setBackgroundImagesOfCards(ListOfImages, ListOfObjectIds, BackgroundColors) {
-		for(var i = 0; i < ListOfImages.length; i++){
-			//var imageUrl = "url(<%= asset_path('" + ListOfImages[i] + "') %>)" ;
-			var imageUrl = "<%= asset_path('" + ListOfImages[i] + "') %>" ;
-						//var imageUrl = "url(<%= asset_path('" + ListOfImages[i] + "') %>)" ;
 
+function setBackgroundImagesOfCards(ListOfImages, ListOfObjectIds, BackgroundColors) {
+ 		for(var i = 0; i < ListOfImages.length; i++){
+			//var imageUrl = ListOfImages[i];
 			
-			var elementId = ListOfObjectIds[i] ;
-			var color = backgroundColors[i];
+			var imageUrl = "<%= asset_path('" + ListOfImages[i] + "') %>" ;
+			console.log(imageUrl);
+			console.log("+++++++++++++++++++++++++++++++++++++++++++++++");
+			
+			//var imageUrl = "url(<%= asset_path('" + ListOfImages[i] + "') %>)" ;
+ 			var elementId = ListOfObjectIds[i] ;
+ 			var color = backgroundColors[i];
+			//$(elementId).css("background-image", "url("+ imageUrl + ")");
 			$(elementId).css("background-image", imageUrl);
-			//$(elementId).css("background-color", color);
+ 			//$(elementId).css("background-color", color);
 	}
 }
+
 
 // List of element ids who will have the digitized words as their background
 var ListOfObjectIdsD= [
