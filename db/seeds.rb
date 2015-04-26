@@ -14,27 +14,27 @@ puts("# ----------------------- Players ----------------------- ")
 	p.save!
 
 puts("# ----------------------- Validations ----------------------- ")
-	v = Validation.new(user_digitization:'بشيء',word_image_url: '29.jpg',
+	v = Validation.new(user_digitization:'بشيء',word_image_url: 'assets/29.jpg',
 			word_id:'1', certinity_rate:'1',known:'false')
 	v.save!
 
-	v = Validation.new(user_digitization:'لم',word_image_url: '30.jpg',
+	v = Validation.new(user_digitization:'لم',word_image_url: 'assets/30.jpg',
 			word_id:'2', certinity_rate:'1',known:'false')
 	v.save!
 
-	v = Validation.new(user_digitization:'على',word_image_url: '40.jpg',
+	v = Validation.new(user_digitization:'على',word_image_url: 'assets/40.jpg',
 			word_id:'3', certinity_rate:'1',known:'false')
 	v.save!
 
-	v = Validation.new(user_digitization:'اجتمعوا',word_image_url: '39.jpg',
+	v = Validation.new(user_digitization:'اجتمعوا',word_image_url: 'assets/39.jpg',
 			word_id:'4', certinity_rate:'1',known:'false')
 	v.save!
 
-	v = Validation.new(user_digitization:'ولو',word_image_url: '38.jpg',
+	v = Validation.new(user_digitization:'ولو',word_image_url: 'assets/38.jpg',
 			word_id:'5', certinity_rate:'1',known:'false')
 	v.save!
 	
-	v = Validation.new(user_digitization:'لك',word_image_url: '37.jpg',
+	v = Validation.new(user_digitization:'لك',word_image_url: 'assets/37.jpg',
 			word_id:'6', certinity_rate:'1',known:'false')
 	v.save!
 
