@@ -108,12 +108,13 @@ function setBackgroundImagesOfCards(ListOfImages, ListOfObjectIds, BackgroundCol
 			console.log(ListOfImages[i]);
  			var elementId = ListOfObjectIds[i] ;
  			var color = backgroundColors[i];
- 			var s = "<%= asset_path('"+ ListOfImages[i] + "') %>";
- 			console.log(s + "sssssssssssss");
+ 			//var s = "<%= asset_path('"+ ListOfImages[i] + "') %>";
+ 			//console.log(s + "sssssssssssss");
 			//$(elementId).css("background-image","url('" + s +"')"); >>>> partially correct 
  			//$(elementId).css("background-color", color);
- 			$(elementId).css("background-image","image-url('" + s +"')");
-
+ 			$(elementId).css("background-image","url('" + ListOfImages[i] +"')");
+ 			console.log("url('" + ListOfImages[i] +"')");
+ 			console.log("------------------------------------")
 	}
 }
 
