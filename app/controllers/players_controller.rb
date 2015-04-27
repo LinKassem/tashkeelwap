@@ -22,7 +22,7 @@ class PlayersController < ApplicationController
     
     gon.test_array = []
     (0..5).each do |i|      
-      dynamic_asset_path = ActionController::Base.helpers.asset_path(@validation_words[i].word_image_url)
+      #dynamic_asset_path = ActionController::Base.helpers.asset_path(@validation_words[i].word_image_url)
       gon.test_array.push(dynamic_asset_path)
       puts "========================================"
       puts gon.test_array[i]
