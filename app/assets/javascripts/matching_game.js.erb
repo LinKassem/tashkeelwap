@@ -104,6 +104,7 @@ function setBackgroundImagesOfCards(ListOfImages, ListOfObjectIds, BackgroundCol
 			$(elementId).css("background-image",dynamic_asset_path);
  			//$(elementId).css("background-color", color);
  			*/
+ 		/*
  			console.log("++++++++++++++++++++++++++++++++++")
 			console.log(ListOfImages[i]);
  			var elementId = ListOfObjectIds[i] ;
@@ -116,6 +117,22 @@ function setBackgroundImagesOfCards(ListOfImages, ListOfObjectIds, BackgroundCol
  			$(elementId).css("background-image","url('" + test +"')");
  			console.log("url('" + test +"')");
  			console.log("------------------------------------")
+	*/
+
+ 			console.log("++++++++++++++++++++++++++++++++++")
+			console.log(ListOfImages[i]);
+ 			var elementId = ListOfObjectIds[i] ;
+ 			var color = backgroundColors[i];
+ 			var test = ListOfImages[i];
+ 			//var s = "<%= asset_path('"+ ListOfImages[i] + "') %>";
+ 			//console.log(s + "sssssssssssss");
+			//$(elementId).css("background-image","url('" + s +"')"); >>>> partially correct 
+ 			//$(elementId).css("background-color", color);
+ 			$(elementId).css("background-image","url('" + test +"')");
+ 			console.log("url('" + test +"')");
+ 			console.log("------------------------------------")
+
+
 	}
 }
 
