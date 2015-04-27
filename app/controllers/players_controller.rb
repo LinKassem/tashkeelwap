@@ -19,17 +19,6 @@ class PlayersController < ApplicationController
     gon.player_id = current_player.id.to_s
     @validation_words = Validation.limit(6)
     gon.validation_words = @validation_words
-    
-    gon.test_array = []
-    (0..5).each do |i|      
-      #dynamic_asset_path = ActionController::Base.helpers.asset_path(@validation_words[i].word_image_url)
-      #gon.test_array.push(dynamic_asset_path)
-      #puts "========================================"
-      #puts gon.test_array[i]
-    end
-
-
-
     gon.validation_words_images = @validation_words.map(&:word_image_url)
     gon.validation_words_digitizations = @validation_words.map(&:user_digitization)
     gon.validation_words_ids = @validation_words.map(&:word_id)
