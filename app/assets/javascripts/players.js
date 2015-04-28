@@ -442,42 +442,42 @@ function add_skoon(){
 
 function hinter_add_dama(){
   var value = $('#submit-second-hint-value').val();
-  $('#submit-second-hint-value').val(value + 'ُ');
+  $('#submit-second-hint-value').val(value + '-ُ  ');
 }
 
 function hinter_add_fatha(){
   var value = $('#submit-second-hint-value').val();
-  $('#submit-second-hint-value').val(value + 'َ');
+  $('#submit-second-hint-value').val(value + '-َ  ');
 }
 
 function hinter_add_kasra(){
   var value = $('#submit-second-hint-value').val();
-  $('#submit-second-hint-value').val(value + 'ِ');
+  $('#submit-second-hint-value').val(value + '-ِ  ');
 }
 
 function hinter_add_shadda(){
   var value = $('#submit-second-hint-value').val();
-  $('#submit-second-hint-value').val(value + 'ّ');
+  $('#submit-second-hint-value').val(value + '-ّ  ');
 }
 
 function hinter_add_tanweenMadmoum(){
   var value = $('#submit-second-hint-value').val();
-  $('#submit-second-hint-value').val(value + 'ٌ');
+  $('#submit-second-hint-value').val(value + '-ٌ  ');
 }
 
 function hinter_add_tanweenMaftouh(){
   var value = $('#submit-second-hint-value').val();
-  $('#submit-second-hint-value').val(value + 'ً');
+  $('#submit-second-hint-value').val(value + '-ً  ');
 }
 
 function hinter_add_tanweenMaksour(){
   var value = $('#submit-second-hint-value').val();
-  $('#submit-second-hint-value').val(value + 'ٍ');
+  $('#submit-second-hint-value').val(value + '-ٍ  ');
 } 
 
 function hinter_add_skoon(){
   var value = $('#submit-second-hint-value').val();
-  $('#submit-second-hint-value').val(value + 'ْ');
+  $('#submit-second-hint-value').val(value + '-ْ  ');
 }
 
 
