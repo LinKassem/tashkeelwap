@@ -75,9 +75,18 @@ class PlayersController < ApplicationController
       @word2_ocr = Word.find(@index2).ocr_digitization
       @word2_image_url = Word.find(@index2).word_image_url
 
+#
 
-      @word_ocr = Word.find(@index).ocr_digitization
-      @word_image_url = Word.find(@index).word_image_url
+puts "word1 id "
+puts @index
+puts @word_ocr
+puts "============="
+puts "word2 id "
+puts @index2
+puts @word2_ocr
+puts "============="
+
+#
 
       @waiting_player = Waiting.last
       @waiting_player_id = @waiting_player.waiting_player_id.to_s
@@ -92,6 +101,18 @@ class PlayersController < ApplicationController
       new_channel = 'private-game_channel-' + current_player.id.to_s + 
                     '-' + @waiting_player_id
 
+      @phase1_game_session = Session.new()
+      @phase1_game_session.player_id = current_player.id
+      @phase1_game_session.hinter_id = @waiting_player_id
+      @phase1_game_session.word_id = @index 
+      @phase1_game_session.save!
+
+      @phase2_game_session = Session.new()
+      @phase2_game_session.player_id = @waiting_player_id
+      @phase2_game_session.hinter_id = current_player.id
+      @phase2_game_session.word_id = @index2 
+      @phase2_game_session.save!
+
       eventData = {
                   'channel_name': new_channel ,
                   'initiated_by': @waiting_player_id,
@@ -105,7 +126,9 @@ class PlayersController < ApplicationController
                   'word_image_url': @word_image_url,
                   'word2_id': @index2,
                   'word2_ocr': @word2_ocr,
-                  'word2_image_url': @word2_image_url
+                  'word2_image_url': @word2_image_url,
+                  'phase1_game_session_id': @phase1_game_session.id,
+                  'phase2_game_session_id': @phase2_game_session.id,
                 }
 
       Pusher.trigger_async( channels, 'private-one-to-one-game-request', eventData);
@@ -137,6 +160,12 @@ class PlayersController < ApplicationController
   def send_first_hint
     @channel = params[:channel_name]
     @hint_value = params[:hint_value]
+    #@session_id = params[:session_id]
+
+    @current_session = Session.find(params[:session_id])
+    @current_session.hint_1 = @hint_value
+    @current_session.save!
+
     data = {
             'hint_value': @hint_value,
             }
@@ -173,6 +202,8 @@ class PlayersController < ApplicationController
 
   # used to reset the solver and the hinter views
   def reset_hinter_solver_views
+    @word2_ocr = params[:word2_ocr]
+    @word2_image_url = params[:word2_image_url]
   end
 
 end

@@ -21,6 +21,9 @@ var word_id; // this is the word Id during the whole session
 
 var type_of_game_over;
 
+var session1_id;
+var session2_id;
+
 
 $(function(){
 
@@ -50,6 +53,8 @@ $(function(){
     word_id = data.word_id
     phase1_started = true;
     prepare_game_side_bar(data.initiated_by_name, data.play_with_name);
+    session1_id = data.phase1_game_session_id;
+    session2_id = data.phase2_game_session_id;
 
   	if(data.initiated_by == gon.player_id){
       $('#waiting').css('display', 'none');
@@ -65,7 +70,9 @@ $(function(){
       setTimeout(function(){
     		console.log("you are a solver");
         $('#game-explanation-solver-side').css('display','none');
-    		prepare_solver_view(data.play_with_name, data.word_ocr, data.channel_name);
+
+        prepare_solver_view(data.play_with_name, data.word_ocr, data.channel_name);
+
       }, 10000);
   	}
     channel_name = data.channel_name;
@@ -81,7 +88,15 @@ $(function(){
       if(phase1_started && phase1_ended){
         phase2_started = true;
         reset_game_side_bar();
-        $('#reset-hinter-solver-views').click();
+        // Ajax call to reset the views
+        $.ajax({
+          url : "/reset_hinter_solver_views",
+          type : "get",
+          data : {  word2_ocr: data.word2_ocr,
+                    word2_image_url: data.word2_image_url,
+                  }
+        });
+
         bool_hint1_requested = false;
         bool_hint2_requested = false;
         bool_hint3_requested = false;
@@ -94,6 +109,7 @@ $(function(){
         if(data.initiated_by == gon.player_id){
           $('#hinter-container').css('display', 'none');
           console.log("You are a solver in PHASE 2");
+          console.log("word sent as method input " + data.word2_ocr );
           prepare_solver_view(data.play_with_name, data.word2_ocr, data.channel_name);
         } else if (data.play_with == gon.player_id){
           $('#solver-container').css('display', 'none');
@@ -124,7 +140,10 @@ $(function(){
     }, 50);
 
 
-
+    $(document).on('click', '.solver-word', function(){
+      $('.solver-word').last().innerHtml = "MMMMMMMMMMMMMMMMMMMM";
+      console.log("entered");
+    });
 
 
 
@@ -147,6 +166,8 @@ $(function(){
   $(document).on('click', '#submit-second-hint-button', submit_second_hint);
   $(document).on('click', '#submit-third-hint-button', submit_third_hint);
   $(document).on('click', '#submit-solver-word-entry-button', submit_solver_entry);
+
+
 
 }) //--end of documentReady function
 
@@ -234,14 +255,23 @@ function submit_first_hint(){
     $('#first_hint_error').css('display','none');
     $('textarea#submit-first-hint-value').css('margin-bottom','16px');
     console.log("3adeeeeeeeeeeeet");
+    
+    if(phase1_started && (!phase1_ended)){
+      var session_id = session1_id;
+    }else if (phase1_started && phase1_ended){
+      var session_id = session2_id;
+    }
+    
     $.ajax({
     url : "/send_first_hint",
     type : "post",
     data : { channel_name: channel_name,
               hint_value: hint_value,
+              session_id: session_id
            }
     });
     console.log(" First HINT SENT YA RAB !!");
+    console.log("session id send to controller via ajax =>  " + session_id );
     
   }  
 }
@@ -327,9 +357,8 @@ function prepare_solver_view(solver_name, word_ocr, solver_id){
   $('#player-container').css('display','none');
   $('#solver-container').css('display','block');
   $('#solver-name').html(solver_name);
-  $('#solver-word').html(word_ocr);
-  //var old_value = $('#hidden-solver-id-field').val();
-  $('#hidden-solver-id-field').val(solver_id);
+  $('.solver-word').html(word_ocr);
+
 }
 
 
@@ -436,43 +465,7 @@ function add_skoon(){
   var value = $('#solver-input-field').val();
   $('#solver-input-field').val(value + 'ْ');
 }
-/////////////////////////////////////////////
 
-
-/*
-
-      bool_hint1_requested = false;
-      bool_hint2_requested = false;
-      bool_hint3_requested = false;
-
-      bool_hint1_received = false;
-      bool_hint2_received = false;
-      bool_hint3_received = false;
-
-      phase1_started = true;
-      setTimeout(function(){
-        //if ( phase1_started && (!phase1_ended)){
-          $('#reset-hinter-solver-views').click();
-            bool_hint1_requested = false;
-            bool_hint2_requested = false;
-            bool_hint3_requested = false;
-
-            bool_hint1_received = false;
-            bool_hint2_received = false;
-            bool_hint3_received = false;
-            
-          if(data.initiated_by == gon.player_id){
-            $('#hinter-container').css('display', 'none');
-            console.log("You are a solver in PHASE 2");
-            prepare_solver_view(data.play_with_name, data.word2_ocr, data.channel_name);
-          } else if (data.play_with == gon.player_id){
-            $('#solver-container').css('display', 'none');
-            console.log("you are a HINTER in PHASE 2");
-            prepare_hinter_view(data.initiated_by_name, data.word2_image_url);
-          }
-        //}
-      }, 12000);
-*/
 
 function prepare_game_side_bar(player1_name, player2_name){
   $('#profile-side-bar').css('display', 'none');
@@ -524,4 +517,3 @@ function reset_game_side_bar(){
   stop_count_down();
   start_count_down(120);
 }
-
