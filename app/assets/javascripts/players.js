@@ -30,7 +30,7 @@ $(function(){
 
 	$('#single-player-matching-game').click(function() {
 		$('#render-matching-link').click();
-		setTimeout(revealGameModal,5000);
+		setTimeout(revealGameModal,2500);
 	});
 
 
