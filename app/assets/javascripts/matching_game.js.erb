@@ -63,13 +63,13 @@ function endOfGame(){
 			$('#gameOverModal').foundation('reveal', 'open');
 			setTimeout(function(){
 				$('#gameOverModal').foundation('reveal', 'close');
+    		// refresh the page to generate new words
+    		refresh();	
 			}, 6000);
 			$.ajax({
         url : "/increment_player_score",
         type : "post"
     	});
-    	// refresh the page to generate new words
-    	refresh();	
 		}		
 	}
 }
