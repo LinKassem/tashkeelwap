@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= content_for?(:title) ? yield(:title) : "تَشكِل | مَرحباً :)" %></title>
+    <title><%= content_for?(:title) ? yield(:title) : "   تَشكِل   " %></title>
     <%= stylesheet_link_tag    "application" %>
     <%= javascript_include_tag "vendor/modernizr" %>    
     <%#= javascript_include_tag "application", 'data-turbolinks-track' => true %>    
@@ -14,18 +14,24 @@
     <div class="navigation bar">
       <%= render "layouts/nav_bar" %>
     </div> <!--/navigation bar-->
-
+    <div class="row text-center">
+      <div class="small-4 columns"><br/>&nbsp;</div>
+      <div class="small-8 columns">
+        <br/>
+        <div id="signed-in-label">
+          <% if notice %>
+            <span class="success radius label"><%= notice %></span>
+          <% else %>
+            &nbsp;
+          <% end %>     
+        </div><!--/singed-in-label-->
+      </div><!--/small-8-->      
+    </div>
     <div class="row" id="firstRow">
       <div class="small-4 columns" align="center">
         <%= render "layouts/side_bar"%>
       </div> <!--small-4 columns-->
       <div class="small-8 columns text-center">
-        <% if notice %>
-          <div data-alert class="alert-box info radius">
-            <%= notice %>
-            <a href="#" class="close">&times;</a>
-          </div>
-        <% end %>
         <%# remember that yield will render the current controller/action templater%>
         <% if player_signed_in? %>
           <div class="row" id="carouselRow" style="border: 2px solid #1ABEDC; border-radius:2px; height: 525px;">

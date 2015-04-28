@@ -9,6 +9,7 @@ class Player < ActiveRecord::Base
   validate :duplicate_email, :on=>:create
   validate :email_format
   validate :password_complexity
+  validate :password_length
   #validate :letters_only
   validate :max_length
 
@@ -39,9 +40,8 @@ class Player < ActiveRecord::Base
   end
   
   def password_complexity
-    if password.present? and not password.match(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+/)
-      errors.add(:password, "must include at least one lowercase letter, " +
-          "one uppercase letter, and one digit")
+    if password.present? and not password.match(/(?=.*[a-z])|(?=.*[A-Z])|(?=.*\d).+/)
+      errors.add(:password, "must consist of letters or digits!")
     end
   end
  
@@ -58,7 +58,13 @@ class Player < ActiveRecord::Base
     validates_length_of :name,
                         :maximum => 35 , message: warning_message
   end
- 
+
+  def password_length
+    warning_message = "length should be atleast six characters!"
+    validates_length_of :password,
+                        :minimum => 6 , message: warning_message
+  end 
+
 private  
   
   def generate_authentication_token

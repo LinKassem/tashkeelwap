@@ -20,7 +20,6 @@
 //= require_tree .
 
 $(document).foundation();
-
 // Used to keep the signup dropdown form open if there were errors during registrations
 if ($("#display-devise-errors-signup").length > 0){
     $("#signup").addClass("open f-open-dropdown").css("left", "-99999px");
@@ -28,3 +27,7 @@ if ($("#display-devise-errors-signup").length > 0){
 if ($("#display-devise-errors-signin").length > 0){
     $("#signin").addClass("open f-open-dropdown").css("left", "-99999px");
 }
+
+setTimeout(function(){
+	$('#signed-in-label').fadeOut();
+}, 5000)
