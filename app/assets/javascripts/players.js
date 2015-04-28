@@ -18,6 +18,7 @@ var phase2_ended = false;
 var interval;
 
 var word_id; // this is the word Id during the whole session
+var word2_id
 
 var type_of_game_over;
 
@@ -50,7 +51,8 @@ $(function(){
   });
 
   current_private_channel.bind('private-one-to-one-game-request', function(data) {
-    word_id = data.word_id
+    word1_id = data.word_id
+    word2_id = data.word2_id
     phase1_started = true;
     prepare_game_side_bar(data.initiated_by_name, data.play_with_name);
     session1_id = data.phase1_game_session_id;
@@ -150,13 +152,6 @@ $(function(){
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   });
-
-  /*common_game_channel.bind('solver_end_game_event', function(data) {
-    console.log("GAME ENDED !!!") 
-    url = "/players/" + gon.player_id
-    $(location).attr('href', url);
-    alert(data.message);
-  });*/
 
   //$('#submit-first-hint-button').click(submit_first_hint);
   //$('#submit-second-hint-button').click(submit_second_hint);
@@ -283,6 +278,13 @@ function submit_second_hint(){
     $('textarea#submit-second-hint-value').css('margin-bottom','0px');
     $('#empty_hint2_entry_error').css('display','block');
   } else {
+
+    if(phase1_started && (!phase1_ended)){
+      var session_id = session1_id;
+    }else if (phase1_started && phase1_ended){
+      var session_id = session2_id;
+    }
+
     $('#empty_hint2_entry_error').css('display','none');
     $('textarea#submit-second-hint-value').css('margin-bottom','16px');
     console.log("the textfield is not empty!!!");
@@ -291,6 +293,7 @@ function submit_second_hint(){
     type : "post",
     data : { channel_name: channel_name,
               hint_value: hint_value,
+              session_id: session_id,
            }
     });
     console.log(" Second SENT YA RAB !!");
@@ -305,6 +308,13 @@ function submit_third_hint(){
     $('textarea#submit-third-hint-value').css('margin-bottom','0px');
     $('#empty_hint3_entry_error').css('display','block');
   } else {
+    
+    if(phase1_started && (!phase1_ended)){
+      var session_id = session1_id;
+    }else if (phase1_started && phase1_ended){
+      var session_id = session2_id;
+    }
+
     $('#empty_hint2_entry_error').css('display','none');
     $('textarea#submit-third-hint-value').css('margin-bottom','16px');
     console.log("the third textfield is not empty!!!");
@@ -313,6 +323,7 @@ function submit_third_hint(){
     type : "post",
     data : { channel_name: channel_name,
               hint_value: hint_value,
+              session_id: session_id,
            }
     });
     console.log(" Third SENT YA RAB !!");
@@ -328,6 +339,16 @@ function submit_solver_entry(){
     $('textarea#solver-input-field').css('margin-bottom','0px');
     $('#empty_solver_entry').css('display','block');
   } else {
+
+    if(phase1_started && (!phase1_ended)){
+      var session_id = session1_id;
+      var word_id = word1_id;
+
+    }else if (phase1_started && phase1_ended){
+      var session_id = session2_id;
+      var word_id = word2_id;
+    }
+
     $('#empty_solver_entry').css('display','none'); //remove the error
     $('#solver-input-field').prop('disabled', true); //disable the textfield    
     $('#submit-solver-word-entry-button').addClass('disabled'); // disable submission button 
@@ -337,6 +358,7 @@ function submit_solver_entry(){
     data : { channel_name: channel_name,
              word_digitization: solver_entry_value,
              word_id: word_id,
+             session_id: session_id,
            }
     });
     console.log("Solver submitted his entry!");

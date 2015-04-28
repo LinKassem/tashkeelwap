@@ -67,7 +67,9 @@ function endOfGame(){
 			$.ajax({
         url : "/increment_player_score",
         type : "post"
-    	});	
+    	});
+    	// refresh the page to generate new words
+    	refresh();	
 		}		
 	}
 }

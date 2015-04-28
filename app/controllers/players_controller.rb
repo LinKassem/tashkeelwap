@@ -17,7 +17,7 @@ class PlayersController < ApplicationController
 	def show
 		@player = current_player    
     gon.player_id = current_player.id.to_s
-    @validation_words = Validation.limit(6)
+    @validation_words = Validation.where("certinity_rate < 4").limit(6)
     gon.validation_words = @validation_words
     gon.validation_words_images = @validation_words.map(&:word_image_url)
     gon.validation_words_digitizations = @validation_words.map(&:user_digitization)
@@ -60,7 +60,6 @@ class PlayersController < ApplicationController
       @waiting_list_entry = Waiting.new()
       @waiting_list_entry.waiting_player_id = current_player.id
       @waiting_list_entry.save!
-
     else
       @random_number = Random.new
       @index = @random_number.rand(1..(Word.count))
@@ -74,19 +73,6 @@ class PlayersController < ApplicationController
 
       @word2_ocr = Word.find(@index2).ocr_digitization
       @word2_image_url = Word.find(@index2).word_image_url
-
-#
-
-puts "word1 id "
-puts @index
-puts @word_ocr
-puts "============="
-puts "word2 id "
-puts @index2
-puts @word2_ocr
-puts "============="
-
-#
 
       @waiting_player = Waiting.last
       @waiting_player_id = @waiting_player.waiting_player_id.to_s
@@ -135,18 +121,6 @@ puts "============="
     end
   end
 
-  def test
-    puts params['textField']
-    puts params['hidden-solver-id']
-    puts "++++++++++++++++++++++++++++++++++++++++"
-    @common_channel_name = params['hidden-solver-id']
-    data = {
-           # 'url': player_path,
-            'message': "Game Ended!! Solver has eneted the word.",
-            }
-    Pusher[@common_channel_name].trigger('solver_end_game_event', data);
-  end
-
   def trigger_request_hint_event
     @channel = params[:channel_name]
     puts params[:hint_number]
@@ -156,11 +130,9 @@ puts "============="
     Pusher[@channel].trigger_async('respond_to_hint_request_event', data)
   end
 
-
   def send_first_hint
     @channel = params[:channel_name]
     @hint_value = params[:hint_value]
-    #@session_id = params[:session_id]
 
     @current_session = Session.find(params[:session_id])
     @current_session.hint_1 = @hint_value
@@ -175,6 +147,11 @@ puts "============="
   def send_second_hint
     @channel = params[:channel_name]
     @hint_value = params[:hint_value]
+
+    @current_session = Session.find(params[:session_id])
+    @current_session.hint_2 = @hint_value
+    @current_session.save!
+
     data = {
             'hint_value': @hint_value,
             }
@@ -184,6 +161,11 @@ puts "============="
   def send_third_hint
     @channel = params[:channel_name]
     @hint_value = params[:hint_value]
+
+    @current_session = Session.find(params[:session_id])
+    @current_session.hint_3 = @hint_value
+    @current_session.save!
+
     data = {
             'hint_value': @hint_value,
             }
@@ -191,13 +173,23 @@ puts "============="
   end
 
   def record_solver_entry 
-    # take the values that Later on we need to send to the database
     @channel = params[:channel_name]
-    @word_digitization = params[:word_digitization]
     @word_id = params[:word_id]
+    @word = Word.find(params[:word_id])
+
+    @current_session = Session.find(params[:session_id])
+    @current_session.digitization = params[:word_digitization]
+    @current_session.save!
+
+    @validation_entry = Validation.new()
+    @validation_entry.user_digitization = params[:word_digitization]
+    @validation_entry.word_image_url = @word.word_image_url
+    @validation_entry.word_id = params[:word_id]
+    @validation_entry.certinity_rate = 1
+    @validation_entry.known = false
+    @validation_entry.save!
 
     Pusher[@channel].trigger_async('solver_submitted_word', {}) 
-
   end
 
   # used to reset the solver and the hinter views
