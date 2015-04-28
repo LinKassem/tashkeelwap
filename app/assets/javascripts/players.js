@@ -1,48 +1,35 @@
 var common_game_channel;
 var channel_name;
 var hint_number;
-
 var bool_hint1_requested = false;
 var bool_hint2_requested = false;
 var bool_hint3_requested = false;
-
 var bool_hint1_received = false;
 var bool_hint2_received = false;
 var bool_hint3_received = false;
-
 var phase1_started = false;
 var phase1_ended = false;
 var phase2_started = false;
 var phase2_ended = false;
-
 var interval;
-
 var word_id; // this is the word Id during the whole session
 var word2_id
-
 var type_of_game_over;
-
 var session1_id;
 var session2_id;
 
-
 $(function(){
-
 	$('#single-player-matching-game').click(function() {
 		$('#render-matching-link').click();
-		setTimeout(revealGameModal,1500);
+		setTimeout(revealGameModal,1000);
 	});
-
-
   var pusher = new Pusher('681835ed500029b026cd');
   var name = 'private-game_channel-' + gon.player_id;
   var current_private_channel = pusher.subscribe(name);
-
   //---------------------------------------------------------
 	current_private_channel.bind('pusher:subscription_succeeded', function() {
 		console.log("subscribtion to private_game_channel made");
 	});
-
   //---------------------------------------------------------
   current_private_channel.bind('waiting_event', function(data) {
     console.log(data.message);
@@ -72,9 +59,7 @@ $(function(){
       setTimeout(function(){
     		console.log("you are a solver");
         $('#game-explanation-solver-side').css('display','none');
-
         prepare_solver_view(data.play_with_name, data.word_ocr, data.channel_name);
-
       }, 10000);
   	}
     channel_name = data.channel_name;
@@ -82,10 +67,8 @@ $(function(){
   	common_game_channel.bind('pusher:subscription_succeeded', function() {
 			console.log("subscribtion to common_game_channel succeeded");
 		});
-
     game_logic();
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-// THIS IS THE 2nd part of the game
+    // THIS IS THE 2nd part of the game
     var check_phase2_start = setInterval(function(){
       if(phase1_started && phase1_ended){
         phase2_started = true;
@@ -98,11 +81,9 @@ $(function(){
                     word2_image_url: data.word2_image_url,
                   }
         });
-
         bool_hint1_requested = false;
         bool_hint2_requested = false;
         bool_hint3_requested = false;
-
         bool_hint1_received = false;
         bool_hint2_received = false;
         bool_hint3_received = false;
@@ -122,8 +103,7 @@ $(function(){
       }
     }, 50);
     
-    var check_phase2_end = setInterval(function(){
-      // asl law howa submitted mosh 7an5'osh lel 7etta di aslun 
+    var check_phase2_end = setInterval(function(){ 
       if(phase2_started && phase2_ended){
         if (type_of_game_over == "timeOver"){
           $('#modalTitle').html('إنتهى الوقت!!');  
@@ -140,51 +120,33 @@ $(function(){
         clearInterval(check_phase2_end);
       }
     }, 50);
-
-
     $(document).on('click', '.solver-word', function(){
       $('.solver-word').last().innerHtml = "MMMMMMMMMMMMMMMMMMMM";
       console.log("entered");
     });
-
-
-
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
   });
-
-  //$('#submit-first-hint-button').click(submit_first_hint);
-  //$('#submit-second-hint-button').click(submit_second_hint);
-  //$('#submit-third-hint-button').click(submit_third_hint);
-  //$('#submit-solver-word-entry-button').click(submit_solver_entry);
   $(document).on('click', '#submit-first-hint-button', submit_first_hint);
   $(document).on('click', '#submit-second-hint-button', submit_second_hint);
   $(document).on('click', '#submit-third-hint-button', submit_third_hint);
   $(document).on('click', '#submit-solver-word-entry-button', submit_solver_entry);
-
-
-
 }) //--end of documentReady function
 
-
 function game_logic(){
-
     common_game_channel.bind('respond_to_hint_request_event', function(data){
       if(data.hint_number == "1"){
         respond_to_hint_one();
-        bool_hint1_requested = true; //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        bool_hint1_requested = true; 
       } else if((data.hint_number == "2") && bool_hint1_requested && bool_hint1_received){
-        respond_to_hint_two(); //yet to be implemented
-        bool_hint2_requested = true; //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        respond_to_hint_two();
+        bool_hint2_requested = true; 
       } else if(data.hint_number == "3" && bool_hint2_requested && bool_hint2_received){
-        respond_to_hint_three(); //yet to be implemented
+        respond_to_hint_three();
       } else{
         $('#wait_before_requesting_hint_label').css('visibility', 'visible');
         setTimeout(function(){
           $('#wait_before_requesting_hint_label').css('visibility', 'hidden');
         }, 3250);
       }
-
     });
 
     common_game_channel.bind('send_first_hint_event', function(data){
@@ -230,7 +192,6 @@ function game_logic(){
           $('#hint_sent_alert_container').css('display','none');
       }, 3000);
     });
-
     // after the solver submits the word we check which state we are in and change the game accordingly
     common_game_channel.bind('solver_submitted_word', function(){
       if(phase1_started && !phase1_ended){
@@ -256,7 +217,7 @@ function submit_first_hint(){
     }else if (phase1_started && phase1_ended){
       var session_id = session2_id;
     }
-    
+
     $.ajax({
     url : "/send_first_hint",
     type : "post",
@@ -266,14 +227,12 @@ function submit_first_hint(){
            }
     });
     console.log(" First HINT SENT YA RAB !!");
-    console.log("session id send to controller via ajax =>  " + session_id );
-    
+    console.log("session id send to controller via ajax =>  " + session_id );    
   }  
 }
 
 function submit_second_hint(){
-  var hint_value = $('#submit-second-hint-value').val();
-  
+  var hint_value = $('#submit-second-hint-value').val();  
   if ( !($.trim(hint_value).length > 0) ){
     $('textarea#submit-second-hint-value').css('margin-bottom','0px');
     $('#empty_hint2_entry_error').css('display','block');
@@ -297,10 +256,8 @@ function submit_second_hint(){
            }
     });
     console.log(" Second SENT YA RAB !!");
-    
   }  
 }
-
 
 function submit_third_hint(){
   var hint_value = $('#submit-third-hint-value').val();
@@ -329,9 +286,6 @@ function submit_third_hint(){
     console.log(" Third SENT YA RAB !!");
   }  
 }
-//////////////////////
-
-
 
 function submit_solver_entry(){
   var solver_entry_value = $('#solver-input-field').val();
@@ -365,7 +319,6 @@ function submit_solver_entry(){
   }
 }
 
-
 function prepare_hinter_view(hinter_name, word_image_url) {
   $('#forever-loading-icon').css('display', 'none');
 	$('#waiting').css('display', 'none');
@@ -382,8 +335,6 @@ function prepare_solver_view(solver_name, word_ocr, solver_id){
   $('.solver-word').html(word_ocr);
 
 }
-
-
 // This function is triggered when the solver clicks on the magic wand icon 
 function request_hint() {  
   if(!bool_hint1_requested){
@@ -401,7 +352,6 @@ function request_hint() {
                }
     });
 }
-
 
 function respond_to_hint_one(){
   $('#help-label').html("٢");
@@ -425,7 +375,6 @@ function respond_to_hint_two(){
   $('#submit-second-hint-button').mouseover(); //this will enable the tooltip to open 
 }
 
-
 function respond_to_hint_three(){
   // Changes in the solver view
   $('#help-label').html("٠");
@@ -446,7 +395,6 @@ function respond_to_hint_three(){
   $('#submit-third-hint-button').removeClass("disabled");
   $('#submit-third-hint-button').mouseover(); //this will enable the tooltip to open 
 }
-
 
 function add_dama(){
   var value = $('#solver-input-field').val();
@@ -488,7 +436,6 @@ function add_skoon(){
   $('#solver-input-field').val(value + 'ْ');
 }
 
-
 function prepare_game_side_bar(player1_name, player2_name){
   $('#profile-side-bar').css('display', 'none');
   $('#game-side-bar').css('display', 'block');
@@ -497,11 +444,9 @@ function prepare_game_side_bar(player1_name, player2_name){
   $('#player-2-name').html(player2_name);   
   $('#game-points').html(' 120 ');
   setTimeout(function(){
-    start_count_down(60); //change the timer and the progress bar
+    start_count_down(120);
   }, 10000);
-  //>>>>>>>>>>>>>>>>>>>>>>>>>>>should be 120
 }
-
 
 function start_count_down(seconds){
   var counter = seconds;
@@ -529,7 +474,6 @@ function start_count_down(seconds){
 function stop_count_down(){
   clearInterval(interval);
 }
-
 
 function reset_game_side_bar(){
   $('#game-progress-bar').removeClass("alert").addClass("success");

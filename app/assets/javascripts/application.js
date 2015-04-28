@@ -17,9 +17,6 @@
 //= require slick.min.js
 //= require classie.js
 
-
-
-
 //= require_tree .
 
 $(document).foundation();
@@ -28,9 +25,6 @@ $(document).foundation();
 if ($("#display-devise-errors-signup").length > 0){
     $("#signup").addClass("open f-open-dropdown").css("left", "-99999px");
 }
-
 if ($("#display-devise-errors-signin").length > 0){
     $("#signin").addClass("open f-open-dropdown").css("left", "-99999px");
 }
-
-
