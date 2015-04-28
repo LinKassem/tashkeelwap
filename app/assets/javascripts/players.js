@@ -171,7 +171,8 @@ function game_logic(){
       $('#hint-2-value').html(data.hint_value);
       $('#hint-2-to-solver').css('display', 'block');
       // The hinter should not see the second hint field
-      $('#hint2-entry-position').css('display', 'none').after($('#hint_sent_alert_container'));
+      $('#hint2-entry-position').css('display', 'none');
+      $('#hinter-diacritics-container').css('display','none').after($('#hint_sent_alert_container'));
       $('#hint_sent_alert_container').css('display','block');
       setTimeout(function(){
         $('#hint_sent_alert_container').css('display','none');
@@ -372,7 +373,8 @@ function respond_to_hint_two(){
   $('#small-magic-wand-icon-hinter').css('opacity','1');
   $('#submit-second-hint-value').prop('disabled', false);
   $('#submit-second-hint-button').removeClass("disabled");
-  $('#submit-second-hint-button').mouseover(); //this will enable the tooltip to open 
+  $('#submit-second-hint-button').mouseover(); //this will enable the tooltip to open
+  $('#hinter-diacritics-container').css('display','block'); 
 }
 
 function respond_to_hint_three(){
@@ -435,6 +437,70 @@ function add_skoon(){
   var value = $('#solver-input-field').val();
   $('#solver-input-field').val(value + 'ْ');
 }
+
+/////////////////////////////////////////////////////////////////
+
+function hinter_add_dama(){
+  var value = $('#submit-second-hint-value').val();
+  $('#submit-second-hint-value').val(value + 'ُ');
+}
+
+function hinter_add_fatha(){
+  var value = $('#submit-second-hint-value').val();
+  $('#submit-second-hint-value').val(value + 'َ');
+}
+
+function hinter_add_kasra(){
+  var value = $('#submit-second-hint-value').val();
+  $('#submit-second-hint-value').val(value + 'ِ');
+}
+
+function hinter_add_shadda(){
+  var value = $('#submit-second-hint-value').val();
+  $('#submit-second-hint-value').val(value + 'ّ');
+}
+
+function hinter_add_tanweenMadmoum(){
+  var value = $('#submit-second-hint-value').val();
+  $('#submit-second-hint-value').val(value + 'ٌ');
+}
+
+function hinter_add_tanweenMaftouh(){
+  var value = $('#submit-second-hint-value').val();
+  $('#submit-second-hint-value').val(value + 'ً');
+}
+
+function hinter_add_tanweenMaksour(){
+  var value = $('#submit-second-hint-value').val();
+  $('#submit-second-hint-value').val(value + 'ٍ');
+} 
+
+function hinter_add_skoon(){
+  var value = $('#submit-second-hint-value').val();
+  $('#submit-second-hint-value').val(value + 'ْ');
+}
+
+
+
+///////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function prepare_game_side_bar(player1_name, player2_name){
   $('#profile-side-bar').css('display', 'none');
