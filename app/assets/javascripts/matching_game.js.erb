@@ -119,8 +119,6 @@ var ListOfObjectIdsD= [
 function setBackgroundImagesOfCardsD(ListOfDigitizedWords, ListOfObjectIds, ListOfWordsIds) {
 		for(var i = 0; i < 6; i++){
 			var elementId = ListOfObjectIds[i];
-			// >>>>>>>>>>. this si the line that is giving me an araf error
-			//var canavas = $('.canavas')[i];
 			var all_canavas = document.getElementsByClassName('canavas');
 			var canavas = all_canavas[i];
 			var ctx = canavas.getContext("2d");
