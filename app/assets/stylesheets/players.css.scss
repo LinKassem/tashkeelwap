@@ -75,3 +75,33 @@
 #hinter-diacritics-container{
 	display: none;
 }
+
+#arrow-icon {
+	background: url('/assets/transparent50percent.png') no-repeat -255px -152px;
+	width: 81px;
+	height: 82px;
+}
+
+#correct-guess {
+	background: url('/assets/transparent25percent.png') no-repeat -225px -246px;
+	width: 40px;
+	height: 39px;
+}
+
+#wrong-guess {
+	background: url('/assets/transparent25percent.png') no-repeat -128px -246px;
+	width: 40px;
+	height: 39px;
+}
+
+#correct-guess:hover, #wrong-guess:hover {
+	opacity: 0.5;
+}
+
+#hinter-verify-solver-container {
+	visibility: hidden;
+}
+
+#hinter-alert-label {
+	visibility: hidden;
+}

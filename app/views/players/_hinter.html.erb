@@ -9,21 +9,39 @@
 <div class="row text-center">
 	<div class="small-4 columns text-center">
 	  <div class="row text-center">&nbsp;</div>
-	  <div class="row text-center">&nbsp;</div> 
 	  <div class="row text-center">
-	  	<div class="small-2 columns text-center" >&nbsp;</div>
-	  	<div class="small-8 columns text-center">
-	  		<div id="game-controller-icon">&nbsp;</div>
+	  	<div class="small-4 columns">&nbsp;</div>
+	  	<div class="small-6 columns">
+	  		<span class="alert radius label" id="hinter-alert-label"> انتبه! </span>
 	  	</div>
-	  	<div class="small-2 columns text-center">&nbsp;</div>
-	  </div>
-	  <div class="row text-center" id="help-info-div" style="padding-top:10px;">
-	  	<div class="small-1 columns text-center">&nbsp;</div>
-	  	<div class="small-10 columns text-center">
-	  		<span><b> إلعب وإكسب نقاط إضافية إلى أن يطلب صديقك المساعدة! </b></span>
-	  	</div>
-	  	<div class="small-1 columns text-center">&nbsp;</div>
-	  </div>
+	  	<div class="small-2 columns">&nbsp;</div>
+	  </div> 
+	  <div id="hinter-verify-solver-container">
+		  <div class="row text-center">
+		  	<div class="small-2 columns text-center" >&nbsp;</div>
+		  	<div class="small-8 columns text-center">
+		  		<div id="arrow-icon">&nbsp;</div>
+		  	</div>
+		  	<div class="small-2 columns text-center">&nbsp;</div>
+		  </div>
+		  <div class="row text-center" id="help-info-div" style="padding-top:10px;">
+		  	<div class="small-1 columns text-center">&nbsp;</div>
+		  	<div class="small-10 columns text-center">
+		  		<span><b> خَمَنَ <span><b id="other-player-name">احمد</b></span> أن الكلمة بالتشكيل هي <span><b id="guessed-word-entry">كذا</b></span>.<br/> هل هذا صحيح؟ </b></span>
+		  	</div>
+		  	<div class="small-1 columns text-center">&nbsp;</div>
+		  </div>
+		  <div class="row text-center">
+		  	<div class="small-4 columns text-center">&nbsp;</div>
+		  	<div class="small-6 columns text-center">
+		  		<div class="row text-center">
+		  			<div class="small-6 columns text-center" id="wrong-guess" onclick="wrong_solver_entry()">&nbsp;</div>
+		  			<div class="small-6 columns text-center" id="correct-guess" onclick="correct_solver_entry()">&nbsp;</div>
+		  		</div>
+		  	</div>
+		  	<div class="small-2 columns text-center">&nbsp;</div>
+		  </div>
+		</div><!--/hinter-verify-solver-container-->
 	</div><!--/small-4 column-->
 
 	<div class="small-8 columns text-center">
@@ -61,7 +79,7 @@
 			<div class="small-6 columns">
 	      <div class="row collapse prefix-round">
 	        <div class="small-3 columns">
-	          <i href="#"  class="button prefix disabled has-tip tip-left" data-tooltip aria-haspopup="true" title="ادخل المساعدة الثانية:<br><b>حركات التشكيل التي في الكلمة.<br>مثلاً: ضمة - فتخة</b>" id="submit-second-hint-button">
+	          <i href="#"  class="button prefix disabled has-tip tip-left" data-tooltip aria-haspopup="true" title="ادخل المساعدة الثانية:<br><b>حركات التشكيل التي في الكلمة.<br>مثلاً: -ُ  -َ</b>" id="submit-second-hint-button">
 	          	<img src='/assets/arrow-88-16.png'></img>
 	          </i>
 	        </div>

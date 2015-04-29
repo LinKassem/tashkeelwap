@@ -65,14 +65,14 @@ puts("# ----------------------- Validations ----------------------- ")
 
 puts("# ----------------------- Words ----------------------- ")
 
-	w = Word.new(ocr_digitization:'عليك', word_image_url: '/assets/51.jpg')
+	w = Word.new(ocr_digitization:'عليك', word_image_url: '/assets/51.jpg', display_repetitions: '3')
 	w.save!
 
-	w = Word.new(ocr_digitization:'رفعت', word_image_url: '/assets/52.jpg')
+	w = Word.new(ocr_digitization:'رفعت', word_image_url: '/assets/52.jpg', display_repetitions: '3')
 	w.save!
 
-	w = Word.new(ocr_digitization:'الأقلام', word_image_url: '/assets/53.jpg')
+	w = Word.new(ocr_digitization:'الأقلام', word_image_url: '/assets/53.jpg', display_repetitions: '3')
 	w.save!
 
-	w = Word.new(ocr_digitization:'وجفت', word_image_url: '/assets/54.jpg')
+	w = Word.new(ocr_digitization:'وجفت', word_image_url: '/assets/54.jpg', display_repetitions: '3')
 	w.save!

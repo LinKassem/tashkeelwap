@@ -17,6 +17,8 @@ var word2_id
 var type_of_game_over;
 var session1_id;
 var session2_id;
+var solver_name;
+var hinter_label_interval;
 
 $(function(){
 	$('#single-player-matching-game').click(function() {
@@ -54,6 +56,7 @@ $(function(){
         prepare_hinter_view(data.initiated_by_name, data.word_image_url);        
       }, 10000);  
   	} else if (data.play_with == gon.player_id){
+      solver_name = data.play_with_name;
       $('#player-container').css('display','none');
       $('#game-explanation-solver-side').css('display','block');
       setTimeout(function(){
@@ -91,6 +94,7 @@ $(function(){
         //prepare_game_side_bar(data.initiated_by_name, data.play_with_name);        
         if(data.initiated_by == gon.player_id){
           $('#hinter-container').css('display', 'none');
+          solver_name = data.initiated_by_name;
           console.log("You are a solver in PHASE 2");
           console.log("word sent as method input " + data.word2_ocr );
           prepare_solver_view(data.play_with_name, data.word2_ocr, data.channel_name);
@@ -194,12 +198,35 @@ function game_logic(){
       }, 3000);
     });
     // after the solver submits the word we check which state we are in and change the game accordingly
-    common_game_channel.bind('solver_submitted_word', function(){
+    common_game_channel.bind('solver_submitted_word', function(data){
+      $('#other-player-name').html(data.solver_name);
+      $('#guessed-word-entry').html(data.solver_entry);
+      hinter_label_interval = setInterval(function(){
+        $('#hinter-alert-label').css('visibility','visible');
+        setTimeout(function(){
+          $('#hinter-alert-label').css('visibility','hidden');
+        },1000)
+      },2000);
+      $('#hinter-verify-solver-container').css('visibility', 'visible');
+      // Listen to the events and either increment or decrement the certinity rate of a certain word
+
+
+/*
       if(phase1_started && !phase1_ended){
         phase1_ended = true;
       } else if(phase2_started && !phase2_ended){
         phase2_ended = true;
-      } 
+      }
+*/ 
+    });
+
+    common_game_channel.bind('change_phase_event', function(){
+      clearInterval(hinter_label_interval);
+      if(phase1_started && !phase1_ended){
+        phase1_ended = true;
+      } else if(phase2_started && !phase2_ended){
+        phase2_ended = true;
+      }
     });
 }
 
@@ -314,6 +341,7 @@ function submit_solver_entry(){
              word_digitization: solver_entry_value,
              word_id: word_id,
              session_id: session_id,
+             solver_name: solver_name,
            }
     });
     console.log("Solver submitted his entry!");
@@ -484,8 +512,40 @@ function hinter_add_skoon(){
 
 ///////////////////////////////////////////////////////
 
+function wrong_solver_entry(){
+  //Do nothing in the db. Just end the phase
+/*
+  if(phase1_started && !phase1_ended){
+    phase1_ended = true;
+  } else if(phase2_started && !phase2_ended){
+    phase2_ended = true;
+  }
+*/
+  $.ajax({
+    url : "/change_pahse",
+    type : "get",
+    data : {  channel_name: channel_name,
+            }
+  });
 
 
+}
+
+function correct_solver_entry(){
+  //decrease the word's display_repitions 
+  if(phase1_started && (!phase1_ended)){
+    var word_id = word1_id;
+  }else if (phase1_started && phase1_ended){
+    var word_id = word2_id;
+  }
+  $.ajax({
+  url : "/decrement_word_repetitions",
+  type : "post",
+  data : {  word_id: word_id,
+            channel_name: channel_name,
+          }
+  });
+}
 
 
 

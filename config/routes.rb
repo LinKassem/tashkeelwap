@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   post  '/record_solver_entry'             => 'players#record_solver_entry'
   get   '/reset_hinter_solver_views'       => 'players#reset_hinter_solver_views'                                                  
   get   '/multiplayer_game'                => 'players#multiplayer_game'
+  post  '/decrement_word_repetitions'      => 'players#decrement_word_repetitions'
+  get   '/change_pahse'                    => 'players#change_pahse'
+
   post  '/pusher/auth'                     => 'pusher#auth'
 
 

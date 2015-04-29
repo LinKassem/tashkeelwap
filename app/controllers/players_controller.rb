@@ -189,13 +189,35 @@ class PlayersController < ApplicationController
     @validation_entry.known = false
     @validation_entry.save!
 
-    Pusher[@channel].trigger_async('solver_submitted_word', {}) 
+    data = {
+            'solver_entry': params[:word_digitization],
+            'solver_name': params[:solver_name], 
+            'word_id': @word_id,
+            'session_id': @session_id
+            }
+
+    Pusher[@channel].trigger_async('solver_submitted_word', data) 
   end
 
   # used to reset the solver and the hinter views
   def reset_hinter_solver_views
     @word2_ocr = params[:word2_ocr]
     @word2_image_url = params[:word2_image_url]
+  end
+
+  # If hinter verifies the solver entry then we decrement display number
+  def decrement_word_repetitions
+    @word = Word.find(params[:word_id])
+    @word.display_repetitions -=1
+    @word.save!
+
+    @channel = params[:channel_name]
+    Pusher[@channel].trigger_async('change_phase_event', {})
+  end
+
+  def change_pahse
+    @channel = params[:channel_name]
+    Pusher[@channel].trigger_async('change_phase_event', {})
   end
 
 end
