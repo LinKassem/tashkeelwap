@@ -209,15 +209,6 @@ function game_logic(){
       },2000);
       $('#hinter-verify-solver-container').css('visibility', 'visible');
       // Listen to the events and either increment or decrement the certinity rate of a certain word
-
-
-/*
-      if(phase1_started && !phase1_ended){
-        phase1_ended = true;
-      } else if(phase2_started && !phase2_ended){
-        phase2_ended = true;
-      }
-*/ 
     });
 
     common_game_channel.bind('change_phase_event', function(){
@@ -466,8 +457,6 @@ function add_skoon(){
   $('#solver-input-field').val(value + 'ْ');
 }
 
-/////////////////////////////////////////////////////////////////
-
 function hinter_add_dama(){
   var value = $('#submit-second-hint-value').val();
   $('#submit-second-hint-value').val(value + '-ُ  ');
@@ -508,27 +497,14 @@ function hinter_add_skoon(){
   $('#submit-second-hint-value').val(value + '-ْ  ');
 }
 
-
-
-///////////////////////////////////////////////////////
-
 function wrong_solver_entry(){
   //Do nothing in the db. Just end the phase
-/*
-  if(phase1_started && !phase1_ended){
-    phase1_ended = true;
-  } else if(phase2_started && !phase2_ended){
-    phase2_ended = true;
-  }
-*/
   $.ajax({
     url : "/change_pahse",
     type : "get",
     data : {  channel_name: channel_name,
             }
   });
-
-
 }
 
 function correct_solver_entry(){
@@ -546,21 +522,6 @@ function correct_solver_entry(){
           }
   });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function prepare_game_side_bar(player1_name, player2_name){
   $('#profile-side-bar').css('display', 'none');
