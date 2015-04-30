@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  player_id: 1
+  mg_highest_time_record: 1
+  mg_no_times_played: 1
+
+two:
+  player_id: 1
+  mg_highest_time_record: 1
+  mg_no_times_played: 1

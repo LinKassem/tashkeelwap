@@ -8,9 +8,6 @@ class PlayersController < ApplicationController
   #lists all players
   def index
     @players = Player.all
-    @z = params['textField']
-    puts @z
-    puts ">>>>>>>>>>>>>>>>>>>>"
   end
 	
   #gets a single player
@@ -41,11 +38,20 @@ class PlayersController < ApplicationController
   end
 
   # Used to increment player's score
+  # and check if they reached a new time record 
   def increment_player_score
     @player = current_player
-    puts @player.score
     @player.score += 60
     @player.save!
+
+    @data_record = Datum.where("player_id = ?", current_player.id)[0]
+    @current_time_record = 90 - params[:mg_counter].to_i
+    if @data_record.mg_highest_time_record == -1
+      @data_record.mg_highest_time_record = @current_time_record
+    elsif @data_record.mg_highest_time_record > @current_time_record
+      @data_record.mg_highest_time_record = @current_time_record
+    end
+    @data_record.save!
   end
 
   def multiplayer_game
@@ -218,6 +224,20 @@ class PlayersController < ApplicationController
   def change_pahse
     @channel = params[:channel_name]
     Pusher[@channel].trigger_async('change_phase_event', {})
+  end
+
+  # increment the number of times the matching game is played
+  def increment_no_times_mg_played
+    @data_record = Datum.where("player_id = ?", current_player.id)[0]
+    if @data_record.nil?
+      @data_record = Datum.new()
+      @data_record.player_id = current_player.id
+      @data_record.mg_no_times_played = 1
+      @data_record.save!
+    else
+      @data_record.mg_no_times_played += 1
+      @data_record.save!
+    end
   end
 
 end

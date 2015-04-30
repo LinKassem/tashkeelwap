@@ -10,7 +10,7 @@ puts("                      Creating records                    ")
 puts("**************************************************************")
 
 puts("# ----------------------- Players ----------------------- ")
-	p = Player.new(email: 'player1@gmail.com', password: 'min.tra.90A', name: 'PlayerI')
+	p = Player.new(email: 'player1@gmail.com', password: '123456', name: 'PlayerI')
 	p.save!
 
 puts("# ----------------------- Validations ----------------------- ")

@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150429034650) do
+ActiveRecord::Schema.define(version: 20150430194811) do
+
+  create_table "data", force: :cascade do |t|
+    t.integer  "player_id",              limit: 4
+    t.integer  "mg_highest_time_record", limit: 4, default: -1
+    t.integer  "mg_no_times_played",     limit: 4
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+  end
 
   create_table "players", force: :cascade do |t|
     t.string   "email",                  limit: 255

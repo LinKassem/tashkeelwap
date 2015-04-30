@@ -23,8 +23,13 @@ var hinter_label_interval;
 $(function(){
 	$('#single-player-matching-game').click(function() {
 		$('#render-matching-link').click();
-		setTimeout(revealGameModal,500);
-    matching_game_start_count_down(92);
+		stop_count_down(mg_interval);// Clear the interval (if any)
+    setTimeout(revealGameModal,500);
+    matching_game_start_count_down(91);
+    $.ajax({
+            url : "/increment_no_times_mg_played",
+            type : "post"
+          });
 	});
   var pusher = new Pusher('681835ed500029b026cd');
   var name = 'private-game_channel-' + gon.player_id;
@@ -125,10 +130,6 @@ $(function(){
         clearInterval(check_phase2_end);
       }
     }, 50);
-    $(document).on('click', '.solver-word', function(){
-      $('.solver-word').last().innerHtml = "MMMMMMMMMMMMMMMMMMMM";
-      console.log("entered");
-    });
   });
   $(document).on('click', '#submit-first-hint-button', submit_first_hint);
   $(document).on('click', '#submit-second-hint-button', submit_second_hint);
@@ -536,8 +537,6 @@ function prepare_game_side_bar(player1_name, player2_name){
   }, 10000);
 }
 
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function start_count_down(seconds){
   var counter = seconds;
   interval = setInterval(function() {
@@ -561,8 +560,9 @@ function start_count_down(seconds){
   }, 1000);
 }
 
-function stop_count_down(){
-  clearInterval(interval);
+// clears any given interval variable
+function stop_count_down(given_interval){
+  clearInterval(given_interval);
 }
 
 function reset_game_side_bar(){
@@ -570,6 +570,6 @@ function reset_game_side_bar(){
   $('#game-meter').css('width','100%');
   $('#timer').css('font-weight', 'normal');
   $('#timer').css('color', 'black');
-  stop_count_down();
+  stop_count_down(interval);
   start_count_down(120);
 }

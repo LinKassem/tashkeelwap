@@ -1,3 +1,7 @@
+var time_over_flag = false;
+var mg_interval; 
+var mg_counter;
+
 function changelabelcolortored(){
 	document.getElementById("span").className = "radius alert label";
 }
@@ -39,14 +43,20 @@ function endOfGame(){
 		$(cards[1]).click();
 	} else{
 		if($("#cards").children().length == 0){
+			$('#new-time-record').css('display', 'block');
+			$('#time-record-value').html(90 - mg_counter);
 			$('#gameOverModal').foundation('reveal', 'open');
 			setTimeout(function(){
 				$('#gameOverModal').foundation('reveal', 'close');
     		refresh();	
 			}, 6000);
+			// We should increment the player score
+			// record the time it took him to play the game
+			// update the data table
 			$.ajax({
         url : "/increment_player_score",
-        type : "post"
+        type : "post",
+       	data : { mg_counter: mg_counter }
     	});
 		}		
 	}
@@ -190,24 +200,42 @@ function refresh(){
 }
 
 function matching_game_start_count_down(seconds){
-  var counter = seconds;
-  interval = setInterval(function() {
-      counter--;
-      $('#matching-game-timer').html(counter)
-      if (counter >= 17 ){
-      $('#matching-game-meter').css('width', '-=1.7');
+  mg_counter = seconds;
+  mg_interval = setInterval(function() {
+      mg_counter--;
+      $('#matching-game-timer').html(mg_counter)
+      if (mg_counter >= 17 ){
+      	$('#matching-game-meter').css('width', '-=1.7');
     	} else {
-      $('#matching-game-meter').css('width', '-=1');
+      	$('#matching-game-meter').css('width', '-=1');
     	}
-      console.log("counter =" + counter + " width =" + $('#matching-game-meter').css('width')  );
-      if (counter == 20) {
+      console.log("counter =" + mg_counter + " width =" + $('#matching-game-meter').css('width')  );
+      if (mg_counter == 20) {
         $('#matching-game-progress-bar').removeClass("success").addClass("alert");
         $('#matching-game-timer').css('font-weight', 'bold');
         $('#matching-game-timer').css('color', 'red');
       }
-      if (counter == 0){
-        clearInterval(interval); // stop the time 
-        // Stop the game and clear the modal 
-      }
+      if (mg_counter == 0){
+        clearInterval(mg_interval); // stop the time
+				// Stop the game and open the gameOver modal    
+        time_over(); 
+    	}
   }, 1000);
+}
+
+// reveal end of game modal
+// No need to do anything in the database
+function time_over(){
+	time_over_flag = true; 
+	$('#modalTitle').html("إنتهى الوقت !!");
+	$('#new-time-record').css('display', 'none');
+	$('#gameOverModal').foundation('reveal', 'open');
+	setTimeout(function(){
+		$('#gameOverModal').foundation('reveal', 'close');
+		refresh();	
+	}, 5000);
+}
+
+function stop_count_down(given_interval){
+  clearInterval(given_interval);
 }

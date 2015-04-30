@@ -9,7 +9,6 @@ class Player < ActiveRecord::Base
   validate :duplicate_email, :on=>:create
   validate :email_format
   validate :password_complexity
-  validate :password_length
   #validate :letters_only
   validate :max_length
 
@@ -19,6 +18,7 @@ class Player < ActiveRecord::Base
 
 	# Relations
 	has_many :sessions
+  has_one  :datum
 
 	# Methods
   def ensure_authentication_token
@@ -58,12 +58,6 @@ class Player < ActiveRecord::Base
     validates_length_of :name,
                         :maximum => 35 , message: warning_message
   end
-
-  def password_length
-    warning_message = "length should be atleast six characters!"
-    validates_length_of :password,
-                        :minimum => 6 , message: warning_message
-  end 
 
 private  
   

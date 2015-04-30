@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
 
   devise_for :players
-
-  root 'site#index'
+  root 'site#index'  
   resources :players
 
   post	'/increment_certinity_rate'        => 'players#increment_certinity_rate'  
@@ -18,8 +17,8 @@ Rails.application.routes.draw do
   get   '/multiplayer_game'                => 'players#multiplayer_game'
   post  '/decrement_word_repetitions'      => 'players#decrement_word_repetitions'
   get   '/change_pahse'                    => 'players#change_pahse'
+  post  '/increment_no_times_mg_played'     => 'players#increment_no_times_mg_played'
 
   post  '/pusher/auth'                     => 'pusher#auth'
-
 
 end
