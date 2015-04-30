@@ -188,3 +188,26 @@ function removeTookCards() {
 function refresh(){
 	window.location.reload();
 }
+
+function matching_game_start_count_down(seconds){
+  var counter = seconds;
+  interval = setInterval(function() {
+      counter--;
+      $('#matching-game-timer').html(counter)
+      if (counter >= 17 ){
+      $('#matching-game-meter').css('width', '-=1.7');
+    	} else {
+      $('#matching-game-meter').css('width', '-=1');
+    	}
+      console.log("counter =" + counter + " width =" + $('#matching-game-meter').css('width')  );
+      if (counter == 20) {
+        $('#matching-game-progress-bar').removeClass("success").addClass("alert");
+        $('#matching-game-timer').css('font-weight', 'bold');
+        $('#matching-game-timer').css('color', 'red');
+      }
+      if (counter == 0){
+        clearInterval(interval); // stop the time 
+        // Stop the game and clear the modal 
+      }
+  }, 1000);
+}

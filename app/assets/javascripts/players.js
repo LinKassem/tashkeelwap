@@ -23,7 +23,8 @@ var hinter_label_interval;
 $(function(){
 	$('#single-player-matching-game').click(function() {
 		$('#render-matching-link').click();
-		setTimeout(revealGameModal,1000);
+		setTimeout(revealGameModal,500);
+    matching_game_start_count_down(92);
 	});
   var pusher = new Pusher('681835ed500029b026cd');
   var name = 'private-game_channel-' + gon.player_id;
@@ -535,6 +536,8 @@ function prepare_game_side_bar(player1_name, player2_name){
   }, 10000);
 }
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function start_count_down(seconds){
   var counter = seconds;
   interval = setInterval(function() {

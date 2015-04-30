@@ -12,12 +12,29 @@
 	</div>
 
 	<div id="gameModal" class="reveal-modal medium" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-	  <h2 class="text-center" id="modalTitle"> لعبة الذاكرة </h2>
-	  <p class="lead text-center"> إلعب وإكسب العديد من النقاط !! &nbsp;
-		  <!--<span class="radius secondary label" id="span" style="font-size:15px;">
-		   سنقوم بتنبيهك لحظة إنضمامه 
-		  </span> -->
-		</p>
+		<div class="row text-center">
+<!---->		
+			<div class="small-3 columns text-center" id="matching-game-timer-container">
+        <div class="row text-canter">
+        	<div id="matching-game-timer-info">
+        		<b dir="rtl">لديك 
+        		<span id="matching-game-timer"><bdi>60</bdi></span>
+        		<b dir="rtl">ثانية</b>
+        	</div>
+        </div>
+	      <div class="row text-center">
+		      <div class="progress large-12 success" align="left" id="matching-game-progress-bar">
+        		<span class="meter" id="matching-game-meter"></span>
+        	</div>
+    		</div>
+			</div>
+			<div class="small-6 columns text-center">
+	  		<h2 class="text-center" id="modalTitle"> لعبة الذاكرة! </h2>
+	  	</div>
+	  	<div class="small-3 columns text-center">&nbsp;</div>
+	  </div>
+<!---->
+	  <div class="row text-center">&nbsp;</div> <!--just an empty separator div-->
 	  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 			<section id="game">
 				<div id="cards">

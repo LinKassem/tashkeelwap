@@ -43,13 +43,18 @@
 	display: none;
 }
 
-#game-meter {
+#game-meter, #matching-game-meter {
 	width: 100%;
 }
 
 #timer {
 	font-weight: normal;
 	color: black;
+}
+
+#matching-game-timer-container {
+	border: 2px solid #1BAEDC;
+	border-radius: 5px;
 }
 
 #light-bulb-icon {
