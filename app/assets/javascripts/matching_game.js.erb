@@ -44,6 +44,8 @@ function endOfGame(){
 	} else{
 		if($("#cards").children().length == 0){
 			$('#new-time-record').css('display', 'block');
+			var score = calc_mg_score(90 - mg_counter);
+			$('#mg-score').html(score);
 			$('#time-record-value').html(90 - mg_counter);
 			$('#gameOverModal').foundation('reveal', 'open');
 			setTimeout(function(){
@@ -56,7 +58,10 @@ function endOfGame(){
 			$.ajax({
         url : "/increment_player_score",
         type : "post",
-       	data : { mg_counter: mg_counter }
+       	data : { 
+       					mg_counter: mg_counter,
+       					score: score,
+       				 }
     	});
 		}		
 	}
@@ -238,4 +243,25 @@ function time_over(){
 
 function stop_count_down(given_interval){
   clearInterval(given_interval);
+}
+
+function calc_mg_score(time_taken_to_finish){
+	var score;
+
+	if (time_taken_to_finish <= 25){
+		score = 60;
+		return score;
+	}
+	if (time_taken_to_finish > 25 && time_taken_to_finish <= 45){
+		score = 50;
+		return score;
+	}
+	if (time_taken_to_finish > 45 && time_taken_to_finish <= 50){
+		score = 40;
+		return score;
+	}
+	if (time_taken_to_finish > 50){
+		score = 30;
+		return score;
+	}
 }
