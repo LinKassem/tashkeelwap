@@ -125,18 +125,26 @@ $(function(){
     var check_phase2_end = setInterval(function(){ 
       if(phase2_started && phase2_ended){
         counter_phase2 = counter;
+        
+        // change the modal content to show the score
         if (type_of_game_over == "timeOver"){
           $('#modalTitle').html('إنتهى الوقت!!');  
+          var total_score = 0;
+          var total_time = 240;
+          $('#2pg-new-time-record').css('display','none');
+          counter_phase1 = 120;
+          counter_phase2 = 120;
+        } else{
+          var total_score = counter_phase1 + counter_phase2;
+          var total_time = 240 - total_score;         
+          $('#score-value').html(total_score);
+          $('#2pg-time-record-value').html(total_time);
         }
-        var total_score = counter_phase1 + counter_phase2;
-        var total_time = 240 - total_score;
-        // change the modal content to show the score
-        $('#score-value').html(total_score);
-        $('#2pg-time-record-value').html(total_time);
+
         $('#gameOverModal').foundation('reveal', 'open');
         setTimeout(function(){
           $('#gameOverModal').foundation('reveal', 'close');
-        }, 7000);
+        }, 6000);
         $.ajax({
           url : "/increment_player_score",
           type : "post",
@@ -149,7 +157,9 @@ $(function(){
                   counter_phase2 : counter_phase2,
                   },
         });
-        window.location.href=window.location.href // refresh to redirect to the root page
+        setTimeout(function(){
+          window.location.href = window.location.href // refresh to redirect to the root page
+        }, 6000);
         clearInterval(check_phase2_end);
       }
     }, 50);
