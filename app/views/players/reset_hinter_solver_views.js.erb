@@ -6,6 +6,8 @@ $(function(){
 	$("#hinter-container").html('');
 	$("#hinter-container").html('<%= j render('players/hinter')%>');
 	$('#submit-first-hint-button').mouseout(); //this will disable the tooltip <Quick fix>
+
+	$('#game-explanation-hinter-side').after('<%= j render('players/hints_to_solver')%>')
 	
 	$('.solver-word').html('<%= j @word2_ocr %>');
 	$('#hinter-word-image').attr('src', '<%= j @word2_image_url %>');

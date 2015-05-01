@@ -65,7 +65,7 @@ puts("# ----------------------- Validations ----------------------- ")
 
 puts("# ----------------------- Words ----------------------- ")
 
-	w = Word.new(ocr_digitization:'عليك', word_image_url: '/assets/51.jpg', display_repetitions: '3')
+	w = Word.new(ocr_digitization:'عليك', word_image_url: '/assets/51.jpg', display_repetitions: '0')
 	w.save!
 
 	w = Word.new(ocr_digitization:'رفعت', word_image_url: '/assets/52.jpg', display_repetitions: '3')
