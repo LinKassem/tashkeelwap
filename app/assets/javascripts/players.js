@@ -20,10 +20,17 @@ var session2_id;
 var solver_name;
 var hinter_label_interval;
 
+var counter_phase1;
+var counter_phase2;
+var counter;
+var score_phase1;
+var score_phase2;
+
+
 $(function(){
 	$('#single-player-matching-game').click(function() {
 		$('#render-matching-link').click();
-		stop_count_down(mg_interval);// Clear the interval (if any)
+		stop_count_down(mg_interval);// Clear the mg interval (if any)
     setTimeout(revealGameModal,500);
     matching_game_start_count_down(91);
     $.ajax({
@@ -77,9 +84,11 @@ $(function(){
 			console.log("subscribtion to common_game_channel succeeded");
 		});
     game_logic();
-    // THIS IS THE 2nd part of the game
+    // This is the 2nd part of the game
     var check_phase2_start = setInterval(function(){
       if(phase1_started && phase1_ended){
+        // record the first counter entry
+        counter_phase1 = counter;
         phase2_started = true;
         reset_game_side_bar();
         // Ajax call to reset the views
@@ -115,16 +124,30 @@ $(function(){
     
     var check_phase2_end = setInterval(function(){ 
       if(phase2_started && phase2_ended){
+        counter_phase2 = counter;
         if (type_of_game_over == "timeOver"){
           $('#modalTitle').html('إنتهى الوقت!!');  
         }
+        var total_score = counter_phase1 + counter_phase2;
+        var total_time = 240 - total_score;
+        // change the modal content to show the score
+        $('#score-value').html(total_score);
+        $('#2pg-time-record-value').html(total_time);
         $('#gameOverModal').foundation('reveal', 'open');
         setTimeout(function(){
           $('#gameOverModal').foundation('reveal', 'close');
-        }, 6000);
+        }, 7000);
         $.ajax({
           url : "/increment_player_score",
-          type : "post"
+          type : "post",
+          data : {
+                  source : "2pg",
+                  score : total_score,
+                  session1_id : session1_id,
+                  session2_id : session2_id,
+                  counter_phase1 : counter_phase1,
+                  counter_phase2 : counter_phase2,
+                  },
         });
         window.location.href=window.location.href // refresh to redirect to the root page
         clearInterval(check_phase2_end);
@@ -231,7 +254,6 @@ function submit_first_hint(){
   } else {
     $('#first_hint_error').css('display','none');
     $('textarea#submit-first-hint-value').css('margin-bottom','16px');
-    console.log("3adeeeeeeeeeeeet");
     
     if(phase1_started && (!phase1_ended)){
       var session_id = session1_id;
@@ -531,14 +553,14 @@ function prepare_game_side_bar(player1_name, player2_name){
   //>> Should change the user avatars as well
   $('#player-1-name').html(player1_name);
   $('#player-2-name').html(player2_name);   
-  $('#game-points').html(' 120 ');
+  $('#game-points').html(' ٠ ');
   setTimeout(function(){
     start_count_down(120);
   }, 10000);
 }
 
 function start_count_down(seconds){
-  var counter = seconds;
+  counter = seconds;
   interval = setInterval(function() {
       counter--;
       $('#timer').html(counter)
@@ -570,6 +592,9 @@ function reset_game_side_bar(){
   $('#game-meter').css('width','100%');
   $('#timer').css('font-weight', 'normal');
   $('#timer').css('color', 'black');
+  //add the score of phase 1 & change the phase number
+  $('#game-points').html(counter_phase1);
+  $('#round-number').html('٢\\٢');
   stop_count_down(interval);
   start_count_down(120);
 }

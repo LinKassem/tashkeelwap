@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430194811) do
+ActiveRecord::Schema.define(version: 20150430234748) do
 
   create_table "data", force: :cascade do |t|
     t.integer  "player_id",              limit: 4
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 20150430194811) do
     t.string   "hint_3",       limit: 255
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "round_time",   limit: 4
   end
 
   create_table "validations", force: :cascade do |t|

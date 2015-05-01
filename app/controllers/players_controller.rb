@@ -37,21 +37,30 @@ class PlayersController < ApplicationController
   def matching_game_div
   end
 
-  # Used to increment player's score
-  # and check if they reached a new time record 
+  # Used to increment player's score 
   def increment_player_score
     @player = current_player
-    @player.score += 60
+    @player.score += params[:score].to_i    
     @player.save!
-
-    @data_record = Datum.where("player_id = ?", current_player.id)[0]
-    @current_time_record = 90 - params[:mg_counter].to_i
-    if @data_record.mg_highest_time_record == -1
-      @data_record.mg_highest_time_record = @current_time_record
-    elsif @data_record.mg_highest_time_record > @current_time_record
-      @data_record.mg_highest_time_record = @current_time_record
+    # case mg -> check if they reached a new time record
+    if params[:source] == "mg"
+      @data_record = Datum.where("player_id = ?", current_player.id)[0]
+      @current_time_record = 90 - params[:mg_counter].to_i
+      if @data_record.mg_highest_time_record == -1
+        @data_record.mg_highest_time_record = @current_time_record
+      elsif @data_record.mg_highest_time_record > @current_time_record
+        @data_record.mg_highest_time_record = @current_time_record
+      end
+      @data_record.save!
+    # case 2pg -> update session entries
+    elsif params[:source] = "2pg"
+      @session1 = Session.find(params[:session1_id])
+      @session1.round_time = params[:counter_phase1]
+      @session1.save!
+      @session2 = Session.find(params[:session2_id])
+      @session2.round_time = params[:counter_phase2]
+      @session2.save!
     end
-    @data_record.save!
   end
 
   def multiplayer_game
