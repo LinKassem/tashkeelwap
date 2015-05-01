@@ -76,8 +76,18 @@ class PlayersController < ApplicationController
       @waiting_list_entry.waiting_player_id = current_player.id
       @waiting_list_entry.save!
     else
+      @waiting_player = Waiting.last
+      @waiting_player_id = @waiting_player.waiting_player_id.to_s
+      @waiting_player.destroy
+
       @random_number = Random.new
       @index = @random_number.rand(1..(Word.count))
+      # chech that it is not seen by the player before
+      # check it's repetition number
+      while current_player.sessions.map(&:word_id).include? @index || (Word.find(@index).display_repetitions < 1)
+        @index = @random_number.rand(1..(Word.count))
+      end
+
       @word_ocr = Word.find(@index).ocr_digitization
       @word_image_url = Word.find(@index).word_image_url
 
@@ -85,13 +95,14 @@ class PlayersController < ApplicationController
       while @index == @index2
         @index2 = @random_number.rand(1..(Word.count))
       end
+      # ensure that the player has not seen this word as a solver before 
+      # plus check the word's repetition number
+      while Player.find(@waiting_player_id.to_i).sessions.map(&:word_id).include? @index2 || (Word.find(@index2).display_repetitions < 1)
+        @index2 = @random_number.rand(1..(Word.count))
+      end
 
       @word2_ocr = Word.find(@index2).ocr_digitization
       @word2_image_url = Word.find(@index2).word_image_url
-
-      @waiting_player = Waiting.last
-      @waiting_player_id = @waiting_player.waiting_player_id.to_s
-      @waiting_player.destroy
 
       @waiting_player_name = Player.find(@waiting_player.waiting_player_id).name
       @waiting_player_email = Player.find(@waiting_player.waiting_player_id).email 
