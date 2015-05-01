@@ -18,6 +18,7 @@ var type_of_game_over;
 var session1_id;
 var session2_id;
 var solver_name;
+var hinter_name;
 var hinter_label_interval;
 
 var counter_phase1;
@@ -69,7 +70,8 @@ $(function(){
         prepare_hinter_view(data.initiated_by_name, data.word_image_url);        
       }, 10000);  
   	} else if (data.play_with == gon.player_id){
-      solver_name = data.play_with_name;
+      solver_name = data.play_with_name; 
+      hinter_name = data.initiated_by_name;
       $('#player-container').css('display','none');
       $('#game-explanation-solver-side').css('display','block');
       setTimeout(function(){
@@ -110,6 +112,7 @@ $(function(){
         if(data.initiated_by == gon.player_id){
           $('#hinter-container').css('display', 'none');
           solver_name = data.initiated_by_name;
+          hinter_name = data.play_with_name;
           console.log("You are a solver in PHASE 2");
           console.log("word sent as method input " + data.word2_ocr );
           prepare_solver_view(data.play_with_name, data.word2_ocr, data.channel_name);
@@ -358,7 +361,24 @@ function submit_solver_entry(){
 
     $('#empty_solver_entry').css('display','none'); //remove the error
     $('#solver-input-field').prop('disabled', true); //disable the textfield    
-    $('#submit-solver-word-entry-button').addClass('disabled'); // disable submission button 
+    $('#submit-solver-word-entry-button').addClass('disabled'); // disable submission button
+    $('#magicwandicon').css('opacity', '0.5'); // disable the magic wand icon 
+    $('#magicwandicon').attr('onclick', ""); 
+    $('#ask-for-hint-icon-container').removeClass('has-tip').removeClass('tip-top');
+    $('#ask-for-hint-icon-container').removeAttr("data-tooltip");
+    $('#ask-for-hint-icon-container').removeAttr("aria-haspopup");
+    $('#ask-for-hint-icon-container').removeAttr("title");
+    $('#ask-for-hint-icon-container.tooltip.tip-top').addClass("destroy-Tooltip");
+    // Display alert to the solver that the hinter is processing his answer
+    $('#processing-hinter-name').html(hinter_name);
+    $('#hinter-is-processing-solver-entry').css('visibility','visible');
+    inform_solver_submission_being_processed_interval = setInterval(function(){
+      $('#hinter-is-processing-solver-entry').css('visibility','visible');
+      setTimeout(function(){
+        $('#hinter-is-processing-solver-entry').css('visibility','hidden');
+      },1000)
+    },2000);
+
     $.ajax({
     url : "/record_solver_entry",
     type : "post",
