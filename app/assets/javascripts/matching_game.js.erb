@@ -151,8 +151,10 @@ function checkPattern() {
 		var secondPattern = $(cards[1]).data("pattern");		
 		if(firstPattern.indexOf("D") > -1){
 			$("#"+firstPattern).children(":first").css("visibility","visible");
+			$("#"+firstPattern).children(":first").mouseover(); //this will enable the tooltip to open 
 		} else {
 			$("#"+secondPattern).children(":first").css("visibility","visible");
+			$("#"+secondPattern).children(":first").mouseover(); //this will enable the tooltip to open 
 		}
 		setTimeout(intermediate,700);
 	} else {
@@ -235,6 +237,7 @@ function time_over(){
 	time_over_flag = true; 
 	$('#modalTitle').html("إنتهى الوقت !!");
 	$('#new-time-record').css('display', 'none');
+	$('span.tooltip:visible').hide(); //close any open tooltip
 	$('#gameOverModal').foundation('reveal', 'open');
 	setTimeout(function(){
 		$('#gameOverModal').foundation('reveal', 'close');

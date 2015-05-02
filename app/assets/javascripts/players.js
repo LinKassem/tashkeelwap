@@ -13,7 +13,7 @@ var phase2_started = false;
 var phase2_ended = false;
 var interval;
 var word_id; // this is the word Id during the whole session
-var word2_id
+var word2_id;
 var type_of_game_over;
 var session1_id;
 var session2_id;
@@ -28,8 +28,8 @@ var score_phase1;
 var score_phase2;
 
 var detached_tooltip1;
-var detached_tooltip1;
-var detached_tooltip1;
+var detached_tooltip2;
+var detached_tooltip3;
 
 
 
@@ -44,6 +44,15 @@ $(function(){
             type : "post"
           });
 	});
+
+Pusher.log = function(message) {
+  if (window.console && window.console.log) {
+    window.console.log(message);
+  }
+};
+
+
+
   var pusher = new Pusher('681835ed500029b026cd');
   var name = 'private-game_channel-' + gon.player_id;
   var current_private_channel = pusher.subscribe(name);
@@ -53,14 +62,16 @@ $(function(){
 	});
   //---------------------------------------------------------
   current_private_channel.bind('waiting_event', function(data) {
+    console.log("<<<<<<<<<<<<");
     console.log(data.message);
     $('#player-container').hide();
+    console.log("HHHHHHHHHHHHHHHHHHHHHHHH");
     $('#waiting').css('display','block');
   });
 
   current_private_channel.bind('private-one-to-one-game-request', function(data) {
-    word1_id = data.word_id
-    word2_id = data.word2_id
+    word1_id = data.word_id;
+    word2_id = data.word2_id;
     phase1_started = true;
     prepare_game_side_bar(data.initiated_by_name, data.play_with_name);
     session1_id = data.phase1_game_session_id;
@@ -168,7 +179,7 @@ $(function(){
                   },
         });
         setTimeout(function(){
-          window.location.href = window.location.href // refresh to redirect to the root page
+          window.location.href = window.location.href; // refresh to redirect to the root page
         }, 6000);
         clearInterval(check_phase2_end);
       }

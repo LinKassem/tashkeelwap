@@ -71,7 +71,8 @@ class PlayersController < ApplicationController
       # Redirect to the waiting page & make an entry in the waiting queue
       Pusher[@player1_channel].trigger_async('waiting_event', {
         message: "Waiting...No player has joined yet"
-      });
+      }) #removed a semicolon
+      puts "Waiting----------------------------------------"
       @waiting_list_entry = Waiting.new()
       @waiting_list_entry.waiting_player_id = current_player.id
       @waiting_list_entry.save!
@@ -79,11 +80,13 @@ class PlayersController < ApplicationController
       @waiting_player = Waiting.last
       @waiting_player_id = @waiting_player.waiting_player_id.to_s
       @waiting_player.destroy
+      puts "entered big else---------------------------------"
 
       if @waiting_player_id.to_i == current_player.id 
         # Do nothing we already destroyed the record 
+        puts "I am the same-----------------------------------"
       else 
-
+        puts "elmafroud kolo tamam-----------------------------"
         @words_records = Word.limit(2).where("display_repetitions > 0").order("RAND()")      
         @index = @words_records[0].id
         @index2 = @words_records[1].id 
@@ -145,7 +148,7 @@ class PlayersController < ApplicationController
                     'phase2_game_session_id': @phase2_game_session.id,
                   }
 
-        Pusher.trigger_async( channels, 'private-one-to-one-game-request', eventData);
+        Pusher.trigger_async( channels, 'private-one-to-one-game-request', eventData) #removed colon
       end
     end
   end
