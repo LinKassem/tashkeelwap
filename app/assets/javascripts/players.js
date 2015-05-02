@@ -27,6 +27,11 @@ var counter;
 var score_phase1;
 var score_phase2;
 
+var detached_tooltip1;
+var detached_tooltip1;
+var detached_tooltip1;
+
+
 
 $(function(){
 	$('#single-player-matching-game').click(function() {
@@ -119,6 +124,9 @@ $(function(){
         } else if (data.play_with == gon.player_id){
           $('#solver-container').css('display', 'none');
           console.log("you are a HINTER in PHASE 2");
+          detached_tooltip1.appendTo("body"); // tooltip quick fix
+          detached_tooltip2.appendTo("body");
+          detached_tooltip3.appendTo("body");
           prepare_hinter_view(data.initiated_by_name, data.word2_image_url);
         }
         clearInterval(check_phase2_start);
@@ -128,7 +136,6 @@ $(function(){
     var check_phase2_end = setInterval(function(){ 
       if(phase2_started && phase2_ended){
         counter_phase2 = counter;
-        
         // change the modal content to show the score
         if (type_of_game_over == "timeOver"){
           $('#modalTitle').html('إنتهى الوقت!!');  
@@ -402,12 +409,16 @@ function prepare_hinter_view(hinter_name, word_image_url) {
 }
 
 function prepare_solver_view(solver_name, word_ocr, solver_id){
+  //quick fix for the tooltips
+  detached_tooltip1 = $('span#submit-first-hint-button').detach();
+  detached_tooltip2 = $('span#submit-second-hint-button').detach();
+  detached_tooltip3 = $('span#submit-third-hint-button').detach();
+
 	$('#forever-loading-icon').css('display', 'none');
   $('#player-container').css('display','none');
   $('#solver-container').css('display','block');
   $('#solver-name').html(solver_name);
   $('.solver-word').html(word_ocr);
-
 }
 // This function is triggered when the solver clicks on the magic wand icon 
 function request_hint() {  

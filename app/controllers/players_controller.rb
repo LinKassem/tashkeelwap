@@ -80,68 +80,73 @@ class PlayersController < ApplicationController
       @waiting_player_id = @waiting_player.waiting_player_id.to_s
       @waiting_player.destroy
 
-      @words_records = Word.limit(2).where("display_repetitions > 0").order("RAND()")      
-      @index = @words_records[0].id
-      @index2 = @words_records[1].id 
+      if @waiting_player_id.to_i == current_player.id 
+        # Do nothing we already destroyed the record 
+      else 
 
-      # Might cause an infinite loop unless the db is large
-      # for now do no uses it 
-      # this is to insure that the player does not get the same word twice 
-      #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      #while (current_player.sessions.map(&:word_id).include? @index) ||
-      #      (Player.find(@waiting_player_id.to_i).sessions.map(&:word_id).include? @index2) do
-      #    @words_records = Word.limit(2).where("display_repetitions > 0").order("RAND()")
-      #    @index = @words_records[0].id
-      #    @index2 = @words_records[1].id 
-      #end
-      #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        @words_records = Word.limit(2).where("display_repetitions > 0").order("RAND()")      
+        @index = @words_records[0].id
+        @index2 = @words_records[1].id 
 
-      @word_ocr = Word.find(@index).ocr_digitization
-      @word_image_url = Word.find(@index).word_image_url
+        # Might cause an infinite loop unless the db is large
+        # for now do no uses it 
+        # this is to insure that the player does not get the same word twice 
+        #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        #while (current_player.sessions.map(&:word_id).include? @index) ||
+        #      (Player.find(@waiting_player_id.to_i).sessions.map(&:word_id).include? @index2) do
+        #    @words_records = Word.limit(2).where("display_repetitions > 0").order("RAND()")
+        #    @index = @words_records[0].id
+        #    @index2 = @words_records[1].id 
+        #end
+        #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-      @word2_ocr = Word.find(@index2).ocr_digitization
-      @word2_image_url = Word.find(@index2).word_image_url
+        @word_ocr = Word.find(@index).ocr_digitization
+        @word_image_url = Word.find(@index).word_image_url
 
-      @waiting_player_name = Player.find(@waiting_player.waiting_player_id).name
-      @waiting_player_email = Player.find(@waiting_player.waiting_player_id).email 
+        @word2_ocr = Word.find(@index2).ocr_digitization
+        @word2_image_url = Word.find(@index2).word_image_url
 
-      @player2_channel = 'private-game_channel-' + @waiting_player_id
+        @waiting_player_name = Player.find(@waiting_player.waiting_player_id).name
+        @waiting_player_email = Player.find(@waiting_player.waiting_player_id).email 
 
-      channels = [ @player1_channel, @player2_channel ];
-      new_channel = 'private-game_channel-' + current_player.id.to_s + 
-                    '-' + @waiting_player_id
+        @player2_channel = 'private-game_channel-' + @waiting_player_id
 
-      @phase1_game_session = Session.new()
-      @phase1_game_session.player_id = current_player.id
-      @phase1_game_session.hinter_id = @waiting_player_id
-      @phase1_game_session.word_id = @index 
-      @phase1_game_session.save!
+        channels = [ @player1_channel, @player2_channel ];
+        new_channel = 'private-game_channel-' + current_player.id.to_s + 
+                      '-' + @waiting_player_id
 
-      @phase2_game_session = Session.new()
-      @phase2_game_session.player_id = @waiting_player_id
-      @phase2_game_session.hinter_id = current_player.id
-      @phase2_game_session.word_id = @index2 
-      @phase2_game_session.save!
+        @phase1_game_session = Session.new()
+        @phase1_game_session.player_id = current_player.id
+        @phase1_game_session.hinter_id = @waiting_player_id
+        @phase1_game_session.word_id = @index 
+        @phase1_game_session.save!
 
-      eventData = {
-                  'channel_name': new_channel ,
-                  'initiated_by': @waiting_player_id,
-                  'initiated_by_name': @waiting_player_name,
-                  'initiated_by_email': @waiting_player_email,
-                  'play_with': current_player.id,
-                  'play_with_name': current_player.name,
-                  'play_with_email': current_player.email,
-                  'word_id': @index,
-                  'word_ocr': @word_ocr,
-                  'word_image_url': @word_image_url,
-                  'word2_id': @index2,
-                  'word2_ocr': @word2_ocr,
-                  'word2_image_url': @word2_image_url,
-                  'phase1_game_session_id': @phase1_game_session.id,
-                  'phase2_game_session_id': @phase2_game_session.id,
-                }
+        @phase2_game_session = Session.new()
+        @phase2_game_session.player_id = @waiting_player_id
+        @phase2_game_session.hinter_id = current_player.id
+        @phase2_game_session.word_id = @index2 
+        @phase2_game_session.save!
 
-      Pusher.trigger_async( channels, 'private-one-to-one-game-request', eventData);
+        eventData = {
+                    'channel_name': new_channel ,
+                    'initiated_by': @waiting_player_id,
+                    'initiated_by_name': @waiting_player_name,
+                    'initiated_by_email': @waiting_player_email,
+                    'play_with': current_player.id,
+                    'play_with_name': current_player.name,
+                    'play_with_email': current_player.email,
+                    'word_id': @index,
+                    'word_ocr': @word_ocr,
+                    'word_image_url': @word_image_url,
+                    'word2_id': @index2,
+                    'word2_ocr': @word2_ocr,
+                    'word2_image_url': @word2_image_url,
+                    'phase1_game_session_id': @phase1_game_session.id,
+                    'phase2_game_session_id': @phase2_game_session.id,
+                  }
+
+        Pusher.trigger_async( channels, 'private-one-to-one-game-request', eventData);
+      end
     end
   end
 
