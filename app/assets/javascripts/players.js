@@ -45,14 +45,6 @@ $(function(){
           });
 	});
 
-Pusher.log = function(message) {
-  if (window.console && window.console.log) {
-    window.console.log(message);
-  }
-};
-
-
-
   var pusher = new Pusher('681835ed500029b026cd');
   var name = 'private-game_channel-' + gon.player_id;
   var current_private_channel = pusher.subscribe(name);
@@ -62,10 +54,8 @@ Pusher.log = function(message) {
 	});
   //---------------------------------------------------------
   current_private_channel.bind('waiting_event', function(data) {
-    console.log("<<<<<<<<<<<<");
     console.log(data.message);
     $('#player-container').hide();
-    console.log("HHHHHHHHHHHHHHHHHHHHHHHH");
     $('#waiting').css('display','block');
   });
 
