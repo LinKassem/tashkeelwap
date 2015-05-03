@@ -19,6 +19,9 @@ class PlayersController < ApplicationController
     gon.validation_words_images = @validation_words.map(&:word_image_url)
     gon.validation_words_digitizations = @validation_words.map(&:user_digitization)
     gon.validation_words_ids = @validation_words.map(&:word_id)
+
+    @twopg_highest_ranked_records = Session.order('round_time ASC').where('round_time > 0').limit(3)
+    @mg_highest_ranked_records = Datum.order('mg_highest_time_record ASC').where('mg_highest_time_record > 0').limit(3)
   end
 
   def increment_certinity_rate
