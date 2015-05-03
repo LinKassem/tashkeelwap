@@ -9,24 +9,24 @@
 				  </li>
 				</ul>
 		  </ul>
-          <!-- Left Nav Section -->
-          <% if player_signed_in? %>
-            <ul class="left">
-              <li>
-                  <a data-dropdown="useroptions" aria-controls="signup" aria-expanded="false" data-options="align:bottom; pip:center;"><%= current_player.name %> &#9663;</a>
-              </li>
-            </ul>
-          <% else %>
-              <ul class="left text-center">
-                <li>
-                    <a data-dropdown="signup" aria-controls="signup" aria-expanded="false" data-options="align:bottom; pip:center;">تَسجيل</a>
-                </li>
-                <li class="divider"></li>
-                <li>
-                    <a data-dropdown="signin" aria-controls="signin" aria-expanded="false" data-options="align:bottom; pip:center;">دخول</a>
-                </li>
-              </ul>
-          <% end %>
+      <!-- Left Nav Section -->
+      <% if current_player %>
+        <ul class="left text-center">
+          <li>
+            <%= link_to('تسجيل الخروج', destroy_player_session_path, :method => :delete) %> 
+          </li>
+        </ul>
+      <% else %>
+          <ul class="left text-center">
+            <li>
+                <a data-dropdown="signup" aria-controls="signup" aria-expanded="false" data-options="align:bottom; pip:center;">تَسجيل</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a data-dropdown="signin" aria-controls="signin" aria-expanded="false" data-options="align:bottom; pip:center;">دخول</a>
+            </li>
+          </ul>
+      <% end %>
 		</section>
 	</nav>
 </div>
@@ -41,25 +41,4 @@
   aria-hidden="true" tabindex="-1">
   <!-- signup form -->
   <%= render 'devise/registrations/new' %>  
-</div>
-
-<div id="useroptions" class="f-dropdown small content" data-dropdown-content 
-  aria-hidden="true" tabindex="-1">
-  <div class="row" style="padding-bottom: 10px;">
-    <div class="small-9 columns">
-      <!-- NEED PROPER IMPLEMENTTATION -->
-      <%= link_to('testEditPage', destroy_player_session_path, :method => :patch) %>
-    </div>
-    <div class="small-3 columns text-center">
-      <img src="/assets/settings-16.ico">
-    </div>    
-  </div>
-  <div class="row" style="padding-bottom: 10px;">
-    <div class="small-9 columns">
-       <%= link_to('تسجيل الخروج', destroy_player_session_path, :method => :delete) %> 
-    </div>
-    <div class="small-3 columns text-center"> 
-      <img src="/assets/logout-16.ico">
-    </div>    
-  </div>  
 </div>
