@@ -209,6 +209,7 @@ class PlayersController < ApplicationController
     @current_session.digitization = params[:word_digitization]
     @current_session.save!
 
+# Ask Caroline and Nada if this part is needed
     @validation_entry = Validation.new()
     @validation_entry.user_digitization = params[:word_digitization]
     @validation_entry.word_image_url = @word.word_image_url

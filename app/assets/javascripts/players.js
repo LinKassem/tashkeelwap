@@ -32,6 +32,11 @@ var detached_tooltip2;
 var detached_tooltip3;
 
 $(function(){
+
+  setInterval(function(){
+    $('button.cbutton.cbutton--effect-simo').click();
+  }, 300);
+
 	$('#single-player-matching-game').click(function() {
 		$('#render-matching-link').click();
 		stop_count_down(mg_interval);// Clear the mg interval (if any)
