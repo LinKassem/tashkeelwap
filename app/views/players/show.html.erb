@@ -6,108 +6,129 @@
 </div>
 
 <div id="player-container">
-	<div class="small-6 columns text-center">
-		<div class="row text-center">
-			<div class="small-9 columns">	
-				<%= link_to multiplayer_game_path, id:"two-players-game-button", class:"button", remote:true do %>
-					لعبة التشكيل<sub>لعبة ثنائية</sub>
-				<% end %>
-			</div>
-			<div class="small-3 columns">&nbsp;</div>
-		</div>
-		<div class="row text-center">&nbsp;</div>
-		<div class="row text-center">
-			<div class="small-6 columns text-right">
-				<div class="row text-center">&nbsp;</div>
-				<b>الأرقام القياسية</b>
-			</div>
-			<div class="small-3 columns text-center" id="highest-records-icon">
-			</div>
-			<div class="small-3 columns">&nbsp;</div>
-		</div>
-		<div class="row text-center">
-			<div class="small-10 columns">
-				<table>
-			    <caption></caption>
-			    <tr>
-			      <th id="rank"> المَركز </th>
-			      <th id="playerName"> إسم اللاعب </th>
-			      <th id="playerTime"> الوقت </th>
-			      <th id="playerScore"> النقاط </th>
-			    </tr>
-			    <% if @twopg_highest_ranked_records.empty? %>
-							<tr>
-				      	<th headers="rank"> - </th>
-				      	<td headers="playerName 1"> - </td>
-				      	<td headers="playerTime"> - </td>
-				      	<td headers="playerScore 1"> - </td>
-				    	</tr>
-			    <% else %>
-				    <% @twopg_highest_ranked_records.each_with_index do |record, i| %>
-							<tr>
-				      	<th headers="rank"><%= i+1 %></th>
-				      	<td headers="playerName 1"><%= Player.find(record.player_id).name%></td>
-				      	<td headers="playerTime"><%= record.round_time %></td>
-				      	<td headers="playerScore 1"><%= Player.find(record.player_id).score %></td>
-				    	</tr>  
-						<% end %>
+	<div class="row">&nbsp;</div>
+	<div class="row">&nbsp;</div>
+	<div class="row">&nbsp;</div>
+	<div class="row">&nbsp;</div>
+	<div class="row">
+		<div class="small-6 columns text-center">
+			<div class="row text-center">
+				<div class="small-12 columns">	
+					<%= link_to multiplayer_game_path, id:"two-players-game-button", class:"button", remote:true do %>
+						لعبة التشكيل<sub>لعبة ثنائية</sub>
 					<% end %>
-			  </table>
+				</div>
 			</div>
-			<div class="small-2 columns">&nbsp;</div>
-		</div>
-	</div><!--/small-6 columns-->
-	<div class="small-6 columns text-center">
-		<div class="row text-center">
-			<div class="small-9 columns text-center">
-				<button id="single-player-matching-game">
-					لعبة الذاكرة<sub>لعبة فردية</sub>
-				</button>
+			<div class="row text-center">&nbsp;</div>
+			<div class="row text-center">
+				<div class="small-7 columns text-right">
+					<div class="row text-center">&nbsp;</div>
+					<b>الأرقام القياسية</b>
+				</div>
+				<div class="small-3 columns text-center" id="highest-records-icon"></div>
+				<div class="small-2 columns">&nbsp;</div>
 			</div>
-			<div class="small-3 columns text-center">&nbsp;</div>
-		</div>
-		<div class="row text-center">&nbsp;</div>
-		<div class="row text-center">
-			<div class="small-6 columns text-right">
-				<div class="row text-center">&nbsp;</div>
-				<b>الأرقام القياسية</b>
-			</div>
-			<div class="small-3 columns text-center" id="highest-records-icon">
-			</div>
-			<div class="small-3 columns">&nbsp;</div>
-		</div>
-		<div class="row text-center">
-			<div class="small-10 columns">
-				<table>
-			    <caption></caption>
-			    <tr>
-			      <th id="rank"> المَركز </th>
-			      <th id="playerName"> إسم اللاعب </th>
-			      <th id="playerTime"> الوقت </th>
-			      <th id="playerScore"> النقاط </th>
-			    </tr>
-			    <% if @mg_highest_ranked_records.empty? %>
-							<tr>
-				      	<th headers="rank"> - </th>
-				      	<td headers="playerName 1"> - </td>
-				      	<td headers="playerTime"> - </td>
-				      	<td headers="playerScore 1"> - </td>
-				    	</tr>
-			    <%else%>
-				    <% @mg_highest_ranked_records.each_with_index do |record, i| %>
-							<tr>
-				      	<th headers="rank"><%= i+1 %></th>
-				      	<td headers="playerName 1"><%= Player.find(record.player_id).name%></td>
-				      	<td headers="playerTime"><%= record.mg_highest_time_record %></td>
-				      	<td headers="playerScore 1"><%= Player.find(record.player_id).score %></td>
-				    	</tr>  
+			<div class="row text-center">
+				<div class="small-11 columns">
+					<table>
+				    <caption></caption>
+				    <tr>
+				      <th id="rank"> المَركز </th>
+				      <th id="playerName"> إسم اللاعب </th>
+				      <th id="playerTime"> الوقت </th>
+				      <th id="playerScore"> النقاط </th>
+				    </tr>
+				    <% if @twopg_highest_ranked_records.empty? %>
+								<tr>
+					      	<th headers="rank"> - </th>
+					      	<td headers="playerName 1"> - </td>
+					      	<td headers="playerTime"> - </td>
+					      	<td headers="playerScore 1"> - </td>
+					    	</tr>
+				    <% else %>
+					    <% @twopg_highest_ranked_records.each_with_index do |record, i| %>
+								<tr>
+					      	<th headers="rank"><%= i+1 %></th>
+					      	<td headers="playerName 1"><%= Player.find(record.player_id).name%></td>
+					      	<td headers="playerTime"><%= record.round_time %></td>
+					      	<td headers="playerScore 1"><%= Player.find(record.player_id).score %></td>
+					    	</tr>  
+							<% end %>
 						<% end %>
-					<% end %>
-			  </table>
+				  </table>
+				</div>
+				<div class="small-1 columns">&nbsp;</div>
 			</div>
-			<div class="small-2 columns">&nbsp;</div>
+		</div><!--/small-6 columns-->
+		<div class="small-6 columns text-center">
+			<div class="row text-center">
+				<div class="small-9 columns text-center">
+					<button id="single-player-matching-game">
+						لعبة الذاكرة<sub>لعبة فردية</sub>
+					</button>
+				</div>
+				<div class="small-3 columns text-center">&nbsp;</div>
+			</div>
+			<div class="row text-center">&nbsp;</div>
+			<div class="row text-center">
+				<div class="small-6 columns text-right">
+					<div class="row text-center">&nbsp;</div>
+					<b>الأرقام القياسية</b>
+				</div>
+				<div class="small-3 columns text-center" id="highest-records-icon">
+				</div>
+				<div class="small-3 columns">&nbsp;</div>
+			</div>
+			<div class="row text-center">
+				<div class="small-10 columns">
+					<table>
+				    <caption></caption>
+				    <tr>
+				      <th id="rank"> المَركز </th>
+				      <th id="playerName"> إسم اللاعب </th>
+				      <th id="playerTime"> الوقت </th>
+				      <th id="playerScore"> النقاط </th>
+				    </tr>
+				    <% if @mg_highest_ranked_records.empty? %>
+								<tr>
+					      	<th headers="rank"> - </th>
+					      	<td headers="playerName 1"> - </td>
+					      	<td headers="playerTime"> - </td>
+					      	<td headers="playerScore 1"> - </td>
+					    	</tr>
+				    <%else%>
+					    <% @mg_highest_ranked_records.each_with_index do |record, i| %>
+								<tr>
+					      	<th headers="rank"><%= i+1 %></th>
+					      	<td headers="playerName 1"><%= Player.find(record.player_id).name%></td>
+					      	<td headers="playerTime"><%= record.mg_highest_time_record %></td>
+					      	<td headers="playerScore 1"><%= Player.find(record.player_id).score %></td>
+					    	</tr>  
+							<% end %>
+						<% end %>
+				  </table>
+				</div>
+				<div class="small-2 columns">&nbsp;</div>
+			</div>
+		</div><!--/small-6 columns-->
+	</div><!--/row-->
+	<!--links to surveys here-->
+	<div class="row text-center">
+		<div class="small-6 columns">
+			<div class="row text-center">
+				<div class="small-8 columns" id="survey-link-container">please take 2P survey</div>
+				<div class="small-3 columns" id="small-heart-icon">&nbsp;</div>
+				<div class="small-2 columns" >&nbsp;</div>
+			</div>
 		</div>
-	</div><!--/small-6 columns-->
+		<div class="small-6 columns">
+			<div class="row text-center">
+				<div class="small-8 columns" id="survey-link-container">please take MM survey</div>
+				<div class="small-3 columns" id="small-heart-icon">&nbsp;</div>
+				<div class="small-2 columns" >&nbsp;</div>
+			</div>
+		</div>
+	</div>
 	<%= link_to "hidden-link", matching_game_div_path ,id:"render-matching-link", remote:true %>
 </div><!--/player-container-->
 
