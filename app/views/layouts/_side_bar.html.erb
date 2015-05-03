@@ -74,40 +74,20 @@
       <th id="playerName"> إسم اللاعب </th>
       <th id="playerScore"> النقاط </th>
     </tr>
-    <tr>
-      <th id="1" headers="rank">١</th>
-      <td headers="playerName 1">احمد</td>
-      <td headers="playerScore 1">١٠٠</td>
-    </tr>
-    <tr>
-      <th id="2" headers="rank">٢</th>
-      <td headers="playerName 2">احمد</td>
-      <td headers="playerScore 2">١٠٠</td>
-    </tr>
-    <tr>
-      <th id="3" headers="rank">٣</th>
-      <td headers="playerName 3">احمد</td>
-      <td headers="playerScore 3">١٠٠</td>
-    </tr>
-    <tr>
-      <th id="4" headers="rank">٤</th>
-      <td headers="playerName 4">احمد</td>
-      <td headers="playerScore 4">١٠٠</td>
-    </tr>
-    <tr> 
-      <th id="5" headers="rank">٥</th>
-      <td headers="playerName 5">احمد</td>
-      <td headers="playerScore 5">١٠٠</td>
-    </tr>
-    <tr>
-      <th id="6" headers="rank">٦</th>
-      <td headers="playerName 6">احمد</td>
-      <td headers="playerScore 6">١٠٠</td>
-    </tr>
-    <tr>
-      <th id="7" headers="rank">٧</th>
-      <td headers="playerName 7">احمد</td>
-      <td headers="playerScore 7">١٠٠</td>
-    </tr>
+    <% if @top_ranks.nil? %>
+        <tr>
+          <th headers="rank"> - </th>
+          <td headers="playerName"> - </td>
+          <td headers="playerScore"> - </td>
+        </tr>
+    <% else %>
+      <% @top_ranks.each_with_index do |record, i| %>
+        <tr>
+          <th headers="rank"><%= i+1 %></th>
+          <td headers="playerName"><%= record.name%></td>
+          <td headers="playerScore"><%= record.score %></td>
+        </tr>
+      <% end %>
+    <% end %>
   </table>
 <% end %>

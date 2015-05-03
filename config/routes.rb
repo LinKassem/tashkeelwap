@@ -2,9 +2,8 @@ Rails.application.routes.draw do
 
   devise_for :players
   get  '/players'   => 'players#show' #temp fix as no content yet!
-  get  '/'          => 'players#show' #temp fix as no content yet!
+  #get  '/'          => 'players#show' #temp fix as no content yet!
   root 'site#index'  
-
   resources :players
 
   post	'/increment_certinity_rate'        => 'players#increment_certinity_rate'  
