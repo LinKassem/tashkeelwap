@@ -13,11 +13,11 @@
  *= require_tree .
  *= require_self
  *= require foundation_and_overrides
- *= require slick.css
- *= require slick-theme.css
  *= require dots.css
  *= require matching_game
  *= require component
  *= require icono.min
+ *= require slick
+ *= require slick-theme
  */
 

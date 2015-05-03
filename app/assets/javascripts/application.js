@@ -14,8 +14,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
-//= require slick.min.js
 //= require classie.js
+//= require jquery.slick
 
 //= require_tree .
 
@@ -31,3 +31,40 @@ if ($("#display-devise-errors-signin").length > 0){
 setTimeout(function(){
 	$('#signed-in-label').fadeOut();
 }, 5000)
+
+$('.single-item').slick({
+	dots:true,
+	arrows: true,
+	autoplay:true,
+  autoplaySpeed: 1000,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  rtl: true,
+});	
+
+// Prevent the backspace key from navigating back.
+$(document).unbind('keydown').bind('keydown', function (event) {
+    var doPrevent = false;
+    if (event.keyCode === 8) {
+        var d = event.srcElement || event.target;
+        if ((d.tagName.toUpperCase() === 'INPUT' && 
+             (
+                 d.type.toUpperCase() === 'TEXT' ||
+                 d.type.toUpperCase() === 'PASSWORD' || 
+                 d.type.toUpperCase() === 'FILE' || 
+                 d.type.toUpperCase() === 'EMAIL' || 
+                 d.type.toUpperCase() === 'SEARCH' || 
+                 d.type.toUpperCase() === 'DATE' )
+             ) || 
+             d.tagName.toUpperCase() === 'TEXTAREA') {
+            doPrevent = d.readOnly || d.disabled;
+        }
+        else {
+            doPrevent = true;
+        }
+    }
+
+    if (doPrevent) {
+        event.preventDefault();
+    }
+});
