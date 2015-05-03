@@ -33,13 +33,14 @@ setTimeout(function(){
 }, 5000)
 
 $('.single-item').slick({
-	dots:true,
-	arrows: true,
-	autoplay:true,
-  autoplaySpeed: 1000,
+  dots:true,
+  arrows: true,
+  autoplay:true,
+  autoplaySpeed: 2500,
   slidesToShow: 1,
   slidesToScroll: 1,
   rtl: true,
+  centerMode: true,
 });	
 
 // Prevent the backspace key from navigating back.
