@@ -19,8 +19,8 @@ var session1_id;
 var session2_id;
 var solver_name;
 var hinter_name;
+var s_name; // in case hinter_view
 var hinter_label_interval;
-
 var counter_phase1;
 var counter_phase2;
 var counter;
@@ -30,8 +30,6 @@ var score_phase2;
 var detached_tooltip1;
 var detached_tooltip2;
 var detached_tooltip3;
-
-
 
 $(function(){
 	$('#single-player-matching-game').click(function() {
@@ -68,6 +66,7 @@ $(function(){
     session2_id = data.phase2_game_session_id;
 
   	if(data.initiated_by == gon.player_id){
+      s_name = data.play_with_name;
       $('#waiting').css('display', 'none');
   	  $('#game-explanation-hinter-side').css('display','block');
       setTimeout(function(){
@@ -123,6 +122,7 @@ $(function(){
           console.log("word sent as method input " + data.word2_ocr );
           prepare_solver_view(data.play_with_name, data.word2_ocr, data.channel_name);
         } else if (data.play_with == gon.player_id){
+          s_name = data.initiated_by_name;
           $('#solver-container').css('display', 'none');
           console.log("you are a HINTER in PHASE 2");
           detached_tooltip1.appendTo("body"); // tooltip quick fix
@@ -239,8 +239,17 @@ function game_logic(){
       // The hinter should not see the third hint field
       $('#hint3-entry-position').css('display', 'none').after($('#hint_sent_alert_container'));
       $('#hint_sent_alert_container').css('display','block');
+      //All hints sent, inform hinter that we are waiting for solver to make a submission
       setTimeout(function(){
-          $('#hint_sent_alert_container').css('display','none');
+        $('#hint_sent_alert_container').css('display','none');
+        $('#hinter-waiting-for-solver-to-submit').css('display','block');
+        $('#submitting-solver-name').html(s_name);
+        setInterval(function(){
+          $('#hinter-waiting-for-solver-to-submit').css('visibility','visible');
+          setTimeout(function(){
+            $('#hinter-waiting-for-solver-to-submit').css('visibility','hidden');
+          },1000)
+        },2000);
       }, 3000);
     });
     // after the solver submits the word we check which state we are in and change the game accordingly
@@ -253,6 +262,7 @@ function game_logic(){
           $('#hinter-alert-label').css('visibility','hidden');
         },1000)
       },2000);
+      $('#hinter-waiting-for-solver-to-submit').css('display','none');
       $('#hinter-verify-solver-container').css('visibility', 'visible');
       // Listen to the events and either increment or decrement the certinity rate of a certain word
     });
@@ -336,7 +346,7 @@ function submit_third_hint(){
       var session_id = session2_id;
     }
 
-    $('#empty_hint2_entry_error').css('display','none');
+    $('#empty_hint3_entry_error').css('display','none');
     $('textarea#submit-third-hint-value').css('margin-bottom','16px');
     console.log("the third textfield is not empty!!!");
     $.ajax({
