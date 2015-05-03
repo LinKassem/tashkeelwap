@@ -304,9 +304,7 @@ function submit_first_hint(){
               hint_value: hint_value,
               session_id: session_id
            }
-    });
-    console.log(" First HINT SENT YA RAB !!");
-    console.log("session id send to controller via ajax =>  " + session_id );    
+    }); 
   }  
 }
 
@@ -325,7 +323,6 @@ function submit_second_hint(){
 
     $('#empty_hint2_entry_error').css('display','none');
     $('textarea#submit-second-hint-value').css('margin-bottom','16px');
-    console.log("the textfield is not empty!!!");
     $.ajax({
     url : "/send_second_hint",
     type : "post",
@@ -334,7 +331,6 @@ function submit_second_hint(){
               session_id: session_id,
            }
     });
-    console.log(" Second SENT YA RAB !!");
   }  
 }
 
@@ -353,7 +349,6 @@ function submit_third_hint(){
 
     $('#empty_hint3_entry_error').css('display','none');
     $('textarea#submit-third-hint-value').css('margin-bottom','16px');
-    console.log("the third textfield is not empty!!!");
     $.ajax({
     url : "/send_third_hint",
     type : "post",
@@ -362,7 +357,6 @@ function submit_third_hint(){
               session_id: session_id,
            }
     });
-    console.log(" Third SENT YA RAB !!");
   }  
 }
 
@@ -412,7 +406,6 @@ function submit_solver_entry(){
              solver_name: solver_name,
            }
     });
-    console.log("Solver submitted his entry!");
   }
 }
 

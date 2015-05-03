@@ -153,7 +153,6 @@ class PlayersController < ApplicationController
 
   def trigger_request_hint_event
     @channel = params[:channel_name]
-    puts params[:hint_number]
     data = { 
             'hint_number':params[:hint_number], 
             }

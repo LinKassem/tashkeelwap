@@ -217,7 +217,6 @@ function matching_game_start_count_down(seconds){
     	} else {
       	$('#matching-game-meter').css('width', '-=1');
     	}
-      console.log("counter =" + mg_counter + " width =" + $('#matching-game-meter').css('width')  );
       if (mg_counter == 20) {
         $('#matching-game-progress-bar').removeClass("success").addClass("alert");
         $('#matching-game-timer').css('font-weight', 'bold');
