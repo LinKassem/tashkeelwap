@@ -14,7 +14,7 @@ class PlayersController < ApplicationController
 	def show
 		@player = current_player    
     gon.player_id = current_player.id.to_s
-    @validation_words = Validation.where("certinity_rate < 4").limit(6)
+    @validation_words = Validation.order("Rand()").where("certinity_rate < 4 AND certinity_rate > -4").limit(6)
     gon.validation_words = @validation_words
     gon.validation_words_images = @validation_words.map(&:word_image_url)
     gon.validation_words_digitizations = @validation_words.map(&:user_digitization)
