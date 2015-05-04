@@ -104,7 +104,7 @@ w.save!
 w = Word.new(ocr_digitization:'إذا', word_image_url: '/assets/13.jpg', display_repetitions: '3')
 w.save!
 
-w = Word.new(ocr_digitization:'سالت', word_image_url: '/assets/14.jpg', display_repetitions: '3')
+w = Word.new(ocr_digitization:'سألت', word_image_url: '/assets/14.jpg', display_repetitions: '3')
 w.save!
 
 w = Word.new(ocr_digitization:'فسأل', word_image_url: '/assets/15.jpg', display_repetitions: '3')
