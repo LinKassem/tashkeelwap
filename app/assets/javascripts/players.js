@@ -51,6 +51,17 @@ $(function(){
   var pusher = new Pusher('681835ed500029b026cd');
   var name = 'private-game_channel-' + gon.player_id;
   var current_private_channel = pusher.subscribe(name);
+
+  var presence_name ='presence-channel';
+  var presence_channel = pusher.subscribe(presence_name);
+
+  presence_channel.bind('pusher:subscription_succeeded', function() {
+    console.log("subscribtion to presence_channel made");
+      setInterval(function(){
+        $('#number-of-online-players').html(presence_channel.members.count);  
+      }, 50);    
+      $('#online-players-label').css('visibility', 'visible');
+  });
   //---------------------------------------------------------
 	current_private_channel.bind('pusher:subscription_succeeded', function() {
 		console.log("subscribtion to private_game_channel made");
@@ -63,122 +74,124 @@ $(function(){
   });
 
   current_private_channel.bind('private-one-to-one-game-request', function(data) {
-    word1_id = data.word_id;
-    word2_id = data.word2_id;
-    phase1_started = true;
-    prepare_game_side_bar(data.initiated_by_name, data.play_with_name);
-    session1_id = data.phase1_game_session_id;
-    session2_id = data.phase2_game_session_id;
+    if(presence_channel.members.get(data.initiated_by.to_i) != null ){
+      word1_id = data.word_id;
+      word2_id = data.word2_id;
+      phase1_started = true;
+      prepare_game_side_bar(data.initiated_by_name, data.play_with_name);
+      session1_id = data.phase1_game_session_id;
+      session2_id = data.phase2_game_session_id;
 
-  	if(data.initiated_by == gon.player_id){
-      s_name = data.play_with_name;
-      $('#waiting').css('display', 'none');
-  	  $('#game-explanation-hinter-side').css('display','block');
-      setTimeout(function(){
-        $('#game-explanation-hinter-side').css('display','none');
-        console.log("You are a hinter"); 
-        prepare_hinter_view(data.initiated_by_name, data.word_image_url);        
-      }, 10000);  
-  	} else if (data.play_with == gon.player_id){
-      solver_name = data.play_with_name; 
-      hinter_name = data.initiated_by_name;
-      $('#player-container').css('display','none');
-      $('#game-explanation-solver-side').css('display','block');
-      setTimeout(function(){
-    		console.log("you are a solver");
-        $('#game-explanation-solver-side').css('display','none');
-        prepare_solver_view(data.play_with_name, data.word_ocr, data.channel_name);
-      }, 10000);
-  	}
-    channel_name = data.channel_name;
-  	common_game_channel = pusher.subscribe(data.channel_name);
-  	common_game_channel.bind('pusher:subscription_succeeded', function() {
-			console.log("subscribtion to common_game_channel succeeded");
-		});
-    game_logic();
-    // This is the 2nd part of the game
-    var check_phase2_start = setInterval(function(){
-      if(phase1_started && phase1_ended){
-        // record the first counter entry
-        counter_phase1 = counter;
-        phase2_started = true;
-        reset_game_side_bar();
-        // Ajax call to reset the views
-        $.ajax({
-          url : "/reset_hinter_solver_views",
-          type : "get",
-          data : {  word2_ocr: data.word2_ocr,
-                    word2_image_url: data.word2_image_url,
-                  }
-        });
-        bool_hint1_requested = false;
-        bool_hint2_requested = false;
-        bool_hint3_requested = false;
-        bool_hint1_received = false;
-        bool_hint2_received = false;
-        bool_hint3_received = false;
-        //>>>>>>>>. Need to reset the views in the game_side_bar_view
-        //prepare_game_side_bar(data.initiated_by_name, data.play_with_name);        
-        if(data.initiated_by == gon.player_id){
-          $('#hinter-container').css('display', 'none');
-          solver_name = data.initiated_by_name;
-          hinter_name = data.play_with_name;
-          console.log("You are a solver in PHASE 2");
-          console.log("word sent as method input " + data.word2_ocr );
-          prepare_solver_view(data.play_with_name, data.word2_ocr, data.channel_name);
-        } else if (data.play_with == gon.player_id){
-          s_name = data.initiated_by_name;
-          $('#solver-container').css('display', 'none');
-          console.log("you are a HINTER in PHASE 2");
-          detached_tooltip1.appendTo("body"); // tooltip quick fix
-          detached_tooltip2.appendTo("body");
-          detached_tooltip3.appendTo("body");
-          prepare_hinter_view(data.initiated_by_name, data.word2_image_url);
+    	if(data.initiated_by == gon.player_id){
+        s_name = data.play_with_name;
+        $('#waiting').css('display', 'none');
+    	  $('#game-explanation-hinter-side').css('display','block');
+        setTimeout(function(){
+          $('#game-explanation-hinter-side').css('display','none');
+          console.log("You are a hinter"); 
+          prepare_hinter_view(data.initiated_by_name, data.word_image_url);        
+        }, 10000);  
+    	} else if (data.play_with == gon.player_id){
+        solver_name = data.play_with_name; 
+        hinter_name = data.initiated_by_name;
+        $('#player-container').css('display','none');
+        $('#game-explanation-solver-side').css('display','block');
+        setTimeout(function(){
+      		console.log("you are a solver");
+          $('#game-explanation-solver-side').css('display','none');
+          prepare_solver_view(data.play_with_name, data.word_ocr, data.channel_name);
+        }, 10000);
+    	}
+      channel_name = data.channel_name;
+    	common_game_channel = pusher.subscribe(data.channel_name);
+    	common_game_channel.bind('pusher:subscription_succeeded', function() {
+  			console.log("subscribtion to common_game_channel succeeded");
+  		});
+      game_logic();
+      // This is the 2nd part of the game
+      var check_phase2_start = setInterval(function(){
+        if(phase1_started && phase1_ended){
+          // record the first counter entry
+          counter_phase1 = counter;
+          phase2_started = true;
+          reset_game_side_bar();
+          // Ajax call to reset the views
+          $.ajax({
+            url : "/reset_hinter_solver_views",
+            type : "get",
+            data : {  word2_ocr: data.word2_ocr,
+                      word2_image_url: data.word2_image_url,
+                    }
+          });
+          bool_hint1_requested = false;
+          bool_hint2_requested = false;
+          bool_hint3_requested = false;
+          bool_hint1_received = false;
+          bool_hint2_received = false;
+          bool_hint3_received = false;
+          //>>>>>>>>. Need to reset the views in the game_side_bar_view
+          //prepare_game_side_bar(data.initiated_by_name, data.play_with_name);        
+          if(data.initiated_by == gon.player_id){
+            $('#hinter-container').css('display', 'none');
+            solver_name = data.initiated_by_name;
+            hinter_name = data.play_with_name;
+            console.log("You are a solver in PHASE 2");
+            console.log("word sent as method input " + data.word2_ocr );
+            prepare_solver_view(data.play_with_name, data.word2_ocr, data.channel_name);
+          } else if (data.play_with == gon.player_id){
+            s_name = data.initiated_by_name;
+            $('#solver-container').css('display', 'none');
+            console.log("you are a HINTER in PHASE 2");
+            detached_tooltip1.appendTo("body"); // tooltip quick fix
+            detached_tooltip2.appendTo("body");
+            detached_tooltip3.appendTo("body");
+            prepare_hinter_view(data.initiated_by_name, data.word2_image_url);
+          }
+          clearInterval(check_phase2_start);
         }
-        clearInterval(check_phase2_start);
-      }
-    }, 50);
-    
-    var check_phase2_end = setInterval(function(){ 
-      if(phase2_started && phase2_ended){
-        counter_phase2 = counter;
-        // change the modal content to show the score
-        if (type_of_game_over == "timeOver"){
-          $('#modalTitle').html('إنتهى الوقت!!');  
-          var total_score = 0;
-          var total_time = 240;
-          $('#2pg-new-time-record').css('display','none');
-          counter_phase1 = 120;
-          counter_phase2 = 120;
-        } else{
-          var total_score = counter_phase1 + counter_phase2;
-          var total_time = 240 - total_score;         
-          $('#score-value').html(total_score);
-          $('#2pg-time-record-value').html(total_time);
-        }
+      }, 50);
+      
+      var check_phase2_end = setInterval(function(){ 
+        if(phase2_started && phase2_ended){
+          counter_phase2 = counter;
+          // change the modal content to show the score
+          if (type_of_game_over == "timeOver"){
+            $('#modalTitle').html('إنتهى الوقت!!');  
+            var total_score = 0;
+            var total_time = 240;
+            $('#2pg-new-time-record').css('display','none');
+            counter_phase1 = 120;
+            counter_phase2 = 120;
+          } else{
+            var total_score = counter_phase1 + counter_phase2;
+            var total_time = 240 - total_score;         
+            $('#score-value').html(total_score);
+            $('#2pg-time-record-value').html(total_time);
+          }
 
-        $('#gameOverModal').foundation('reveal', 'open');
-        setTimeout(function(){
-          $('#gameOverModal').foundation('reveal', 'close');
-        }, 6000);
-        $.ajax({
-          url : "/increment_player_score",
-          type : "post",
-          data : {
-                  source : "2pg",
-                  score : total_score,
-                  session1_id : session1_id,
-                  session2_id : session2_id,
-                  counter_phase1 : counter_phase1,
-                  counter_phase2 : counter_phase2,
-                  },
-        });
-        setTimeout(function(){
-          window.location.href = window.location.href; // refresh to redirect to the root page
-        }, 6000);
-        clearInterval(check_phase2_end);
-      }
-    }, 50);
+          $('#gameOverModal').foundation('reveal', 'open');
+          setTimeout(function(){
+            $('#gameOverModal').foundation('reveal', 'close');
+          }, 6000);
+          $.ajax({
+            url : "/increment_player_score",
+            type : "post",
+            data : {
+                    source : "2pg",
+                    score : total_score,
+                    session1_id : session1_id,
+                    session2_id : session2_id,
+                    counter_phase1 : counter_phase1,
+                    counter_phase2 : counter_phase2,
+                    },
+          });
+          setTimeout(function(){
+            window.location.href = window.location.href; // refresh to redirect to the root page
+          }, 6000);
+          clearInterval(check_phase2_end);
+        }
+      }, 50);
+    } // end of if(there is a player online test)
   });
   $(document).on('click', '#submit-first-hint-button', submit_first_hint);
   $(document).on('click', '#submit-second-hint-button', submit_second_hint);

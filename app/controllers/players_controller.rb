@@ -81,10 +81,9 @@ class PlayersController < ApplicationController
       @waiting_player = Waiting.last
       @waiting_player_id = @waiting_player.waiting_player_id.to_s
       @waiting_player.destroy
-
       if @waiting_player_id.to_i == current_player.id 
         # Do nothing we already destroyed the record 
-      else 
+      else  
         @words_records = Word.limit(2).where("display_repetitions > 0").order("RAND()")      
         @index = @words_records[0].id
         @index2 = @words_records[1].id 
@@ -145,7 +144,7 @@ class PlayersController < ApplicationController
                     'phase1_game_session_id': @phase1_game_session.id,
                     'phase2_game_session_id': @phase2_game_session.id,
                   }
-
+        # in js we check if the waiting player is actually online has left
         Pusher.trigger_async( channels, 'private-one-to-one-game-request', eventData)
       end
     end
