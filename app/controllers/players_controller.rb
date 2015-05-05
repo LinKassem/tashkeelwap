@@ -24,13 +24,13 @@ class PlayersController < ApplicationController
   end
 
   def increment_certinity_rate
-    @word = Validation.where("word_id = ?", params[:data_value])
+    @word = Validation.where("word_id = ?", params[:data_value])[0]
     @word.certinity_rate += 1
     @word.save
   end
 
   def decrement_certinity_rate
-    @word = Validation.where("word_id = ?", params[:data_value])
+    @word = Validation.where("word_id = ?", params[:data_value])[0]
     @word.certinity_rate -= 1
     @word.save
   end
