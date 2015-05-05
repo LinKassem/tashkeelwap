@@ -118,7 +118,6 @@ $(function(){
           counter_phase1 = counter;
           phase2_started = true;
           reset_game_side_bar();
-          $('#hinter-alert-label').css('visibility','hidden');
           // Ajax call to reset the views
           $.ajax({
             url : "/reset_hinter_solver_views",
@@ -137,6 +136,8 @@ $(function(){
           //prepare_game_side_bar(data.initiated_by_name, data.play_with_name);        
           if(data.initiated_by == gon.player_id){
             $('#hinter-container').css('display', 'none');
+            $('#hinter-alert-label').css('visibility','hidden');
+
             solver_name = data.initiated_by_name;
             hinter_name = data.play_with_name;
             console.log("You are a solver in PHASE 2");
