@@ -14,7 +14,7 @@ class PlayersController < ApplicationController
 	def show
 		@player = current_player    
     gon.player_id = current_player.id.to_s
-    @validation_words = Validation.where("certinity_rate < 4 AND certinity_rate > -4").limit(6).order("Rand()")
+    @validation_words = Validation.where("certinity_rate < 4 AND certinity_rate > -4").limit(6).order("random()")
     gon.validation_words = @validation_words
     gon.validation_words_images = @validation_words.map(&:word_image_url)
     gon.validation_words_digitizations = @validation_words.map(&:user_digitization)
@@ -84,7 +84,7 @@ class PlayersController < ApplicationController
       if @waiting_player_id.to_i == current_player.id 
         # Do nothing we already destroyed the record 
       else  
-        @words_records = Word.limit(2).where("display_repetitions > 0").order("RAND()")      
+        @words_records = Word.limit(2).where("display_repetitions > 0").order("random()")      
         @index = @words_records[0].id
         @index2 = @words_records[1].id 
 
@@ -236,7 +236,7 @@ class PlayersController < ApplicationController
 
   # If hinter verifies the solver entry then we decrement display number
   def decrement_word_repetitions
-    @word = Word.find(params[:word_id])
+    @word = Word.(params[:word_id])
     @word.display_repetitions -=1
     @word.save!
 
