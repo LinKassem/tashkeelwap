@@ -16,6 +16,7 @@
 //= require foundation
 //= require classie.js
 //= require jquery.slick
+//= require ion.sound.js
 
 //= require_tree .
 

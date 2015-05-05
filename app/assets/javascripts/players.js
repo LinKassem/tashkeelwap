@@ -32,7 +32,17 @@ var detached_tooltip2;
 var detached_tooltip3;
 
 $(function(){
-
+//>>>>>
+  ion.sound({
+      sounds: [
+          {name: "beer_can_opening"},
+          {name: "bell_ring"}
+      ],
+      path: "sounds/",
+      preload: true,
+      volume: 1.0
+  });
+//>>>>>
   setInterval(function(){
     $('button.cbutton.cbutton--effect-simo').click();
   }, 300);
@@ -84,7 +94,10 @@ $(function(){
       prepare_game_side_bar(data.initiated_by_name, data.play_with_name);
       session1_id = data.phase1_game_session_id;
       session2_id = data.phase2_game_session_id;
-
+      // Add the bell ring for both of them
+      //>>>>>>
+      ion.sound.play("bell_ring");
+      //>>>>>>
     	if(data.initiated_by == gon.player_id){
         s_name = data.play_with_name;
         $('#waiting').css('display', 'none');
