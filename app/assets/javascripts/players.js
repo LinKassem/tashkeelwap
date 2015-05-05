@@ -40,7 +40,7 @@ $(function(){
 	$('#single-player-matching-game').click(function() {
 		$('#render-matching-link').click();
 		stop_count_down(mg_interval);// Clear the mg interval (if any)
-    setTimeout(revealGameModal,500);
+    setTimeout(revealGameModal,1000);
     matching_game_start_count_down(91);
     $.ajax({
             url : "/increment_no_times_mg_played",
@@ -58,6 +58,9 @@ $(function(){
   presence_channel.bind('pusher:subscription_succeeded', function() {
     console.log("subscribtion to presence_channel made");
       setInterval(function(){
+        if(presence_channel.members.count == 1 ){
+          $('#la3ebeen-verb').html('لاعب');
+        }
         $('#number-of-online-players').html(presence_channel.members.count);  
       }, 50);    
       $('#online-players-label').css('visibility', 'visible');
