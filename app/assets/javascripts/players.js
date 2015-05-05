@@ -74,7 +74,7 @@ $(function(){
   });
 
   current_private_channel.bind('private-one-to-one-game-request', function(data) {
-    if(presence_channel.members.get(data.initiated_by.to_i) != null ){
+    //if(presence_channel.members.get(data.initiated_by.to_i) != null ){
       word1_id = data.word_id;
       word2_id = data.word2_id;
       phase1_started = true;
@@ -191,7 +191,7 @@ $(function(){
           clearInterval(check_phase2_end);
         }
       }, 50);
-    } // end of if(there is a player online test)
+    //} // end of if(there is a player online test)
   });
   $(document).on('click', '#submit-first-hint-button', submit_first_hint);
   $(document).on('click', '#submit-second-hint-button', submit_second_hint);
