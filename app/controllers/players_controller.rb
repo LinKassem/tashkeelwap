@@ -236,7 +236,7 @@ class PlayersController < ApplicationController
 
   # If hinter verifies the solver entry then we decrement display number
   def decrement_word_repetitions
-    @word = Word.(params[:word_id])
+    @word = Word.find(params[:word_id])
     @word.display_repetitions -=1
     @word.save!
 
