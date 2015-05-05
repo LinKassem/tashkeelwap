@@ -59,7 +59,7 @@ $(function(){
     console.log("subscribtion to presence_channel made");
       setInterval(function(){
         if(presence_channel.members.count == 1 ){
-          $('#la3ebeen-verb').html('لاعب');
+          $('#la3ebeen-verb').html(' لاعب ');
         }
         $('#number-of-online-players').html(presence_channel.members.count);  
       }, 50);    
