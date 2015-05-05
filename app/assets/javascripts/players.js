@@ -280,6 +280,7 @@ function game_logic(){
     common_game_channel.bind('solver_submitted_word', function(data){
       $('#other-player-name').html(data.solver_name);
       $('#guessed-word-entry').html(data.solver_entry);
+      $('#guessed-word-entry').css('color','red');
       hinter_label_interval = setInterval(function(){
         $('#hinter-alert-label').css('visibility','visible');
         setTimeout(function(){
