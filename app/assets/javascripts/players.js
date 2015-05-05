@@ -118,6 +118,7 @@ $(function(){
           counter_phase1 = counter;
           phase2_started = true;
           reset_game_side_bar();
+          $('#hinter-alert-label').css('visibility','hidden');
           // Ajax call to reset the views
           $.ajax({
             url : "/reset_hinter_solver_views",
@@ -144,6 +145,7 @@ $(function(){
           } else if (data.play_with == gon.player_id){
             s_name = data.initiated_by_name;
             $('#solver-container').css('display', 'none');
+            $('#hinter-alert-label').css('visibility','hidden');
             console.log("you are a HINTER in PHASE 2");
             detached_tooltip1.appendTo("body"); // tooltip quick fix
             detached_tooltip2.appendTo("body");
