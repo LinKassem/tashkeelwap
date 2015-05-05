@@ -19,7 +19,8 @@ Rails.application.routes.draw do
   get   '/multiplayer_game'                => 'players#multiplayer_game'
   post  '/decrement_word_repetitions'      => 'players#decrement_word_repetitions'
   get   '/change_pahse'                    => 'players#change_pahse'
-  post  '/increment_no_times_mg_played'     => 'players#increment_no_times_mg_played'
+  post  '/increment_no_times_mg_played'    => 'players#increment_no_times_mg_played'
+  get   '/home_page'                       => 'players#show'
 
   post  '/pusher/auth'                     => 'pusher#auth'
 
