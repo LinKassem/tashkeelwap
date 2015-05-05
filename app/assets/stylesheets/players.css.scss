@@ -1,4 +1,4 @@
-#render-matching-link {
+#matching-game-meter#render-matching-link {
 	visibility: hidden;
 }
 
@@ -44,7 +44,7 @@
 }
 
 #game-meter, #matching-game-meter {
-	width: 100%;
+	width: 100% !important;
 }
 
 #timer {
