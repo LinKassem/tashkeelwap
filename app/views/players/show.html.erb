@@ -144,16 +144,6 @@
 	</div>
 	<%= link_to "hidden-link", matching_game_div_path ,id:"render-matching-link", remote:true %>
 </div><!--/player-container-->
-
-
-<audio autoplay="autoplay" controls="controls">
-	<source src="bell_ring.ogg">
-	<source src="bell_ring.mp3">
-	Your browser does not support the audio element.
-</audio>
-
-
-
 <!--Rendered Divs-->
 <div class="row text-center" id="solver-container">
 	<%= render '/players/solver' %>
