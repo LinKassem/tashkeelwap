@@ -70,13 +70,3 @@ $(document).unbind('keydown').bind('keydown', function (event) {
         event.preventDefault();
     }
 });
-
-  ion.sound({
-      sounds: [
-          {name: "beer_can_opening"},
-          {name: "bell_ring"}
-      ],
-      path: "/assets/sounds/",
-      preload: true,
-      volume: 1.0
-  });
