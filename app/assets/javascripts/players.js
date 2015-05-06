@@ -136,7 +136,7 @@ $(function(){
           //prepare_game_side_bar(data.initiated_by_name, data.play_with_name);        
           if(data.initiated_by == gon.player_id){
             $('#hinter-container').css('display', 'none');
-            $('#hinter-alert-label').css('visibility','hidden');
+            $('#hinter-alert-label').css('display','none');
 
             solver_name = data.initiated_by_name;
             hinter_name = data.play_with_name;
@@ -146,7 +146,7 @@ $(function(){
           } else if (data.play_with == gon.player_id){
             s_name = data.initiated_by_name;
             $('#solver-container').css('display', 'none');
-            $('#hinter-alert-label').css('visibility','hidden');
+            $('#hinter-alert-label').css('display','none');
             console.log("you are a HINTER in PHASE 2");
             detached_tooltip1.appendTo("body"); // tooltip quick fix
             detached_tooltip2.appendTo("body");
@@ -281,6 +281,7 @@ function game_logic(){
       $('#other-player-name').html(data.solver_name);
       $('#guessed-word-entry').html(data.solver_entry);
       $('#guessed-word-entry').css('color','red');
+      $('#hinter-alert-label').css('display','block'); // disply it block in case it was 'none' before
       hinter_label_interval = setInterval(function(){
         $('#hinter-alert-label').css('visibility','visible');
         setTimeout(function(){
