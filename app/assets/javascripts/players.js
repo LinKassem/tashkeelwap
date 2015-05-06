@@ -33,15 +33,7 @@ var detached_tooltip3;
 
 $(function(){
 //>>>>>
-  ion.sound({
-      sounds: [
-          {name: "beer_can_opening"},
-          {name: "bell_ring"}
-      ],
-      path: "/assets/sounds/",
-      preload: true,
-      volume: 1.0
-  });
+
 //>>>>>
   setInterval(function(){
     $('button.cbutton.cbutton--effect-simo').click();
